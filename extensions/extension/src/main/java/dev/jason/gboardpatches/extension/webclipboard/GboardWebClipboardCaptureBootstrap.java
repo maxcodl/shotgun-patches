@@ -43,6 +43,11 @@ public final class GboardWebClipboardCaptureBootstrap {
                 return;
             }
             ensureClipboardListenerInstalled(context);
+            // Revive the portal if it died while enabled (task-manager stop, failed start, etc.).
+            if (!ClipboardSyncService.isServiceRunning()
+                    && WebClipboardPreferences.isEnabled(WebClipboardPreferences.preferences(context))) {
+                ClipboardSyncService.startOrUpdate(context);
+            }
         } catch (Throwable throwable) {
             Log.w(TAG, "Failed to install Web Clipboard capture bootstrap", throwable);
         }

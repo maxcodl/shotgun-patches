@@ -1,9 +1,6 @@
 package dev.jason.gboardpatches.patches.gboard.shared.runtimeabi
 
 internal enum class RuntimeCallId(internal val encodedAbi: String) {
-    AMOLED_THEME_RUNTIME_IS_ACTIVE("Ldev/jason/gboardpatches/extension/theme/AmoledThemeOverride;->isAmoledThemeActive()Z"),
-    AMOLED_THEME_RUNTIME_ADJUST_COLOR("Ldev/jason/gboardpatches/extension/theme/AmoledThemeOverride;->adjustColor(II)I"),
-    AMOLED_THEME_RUNTIME_BLEND_TEXT_COLOR("Ldev/jason/gboardpatches/extension/theme/AmoledThemeOverride;->blendTextColor(II)I"),
     CLIPBOARD_RUNTIME_ABORT_ITEM_BIND("Ldev/jason/gboardpatches/extension/clipboard/GboardClipboardRuntime;->abortItemBind()V"),
     CLIPBOARD_RUNTIME_RESOLVE_COLUMN_COUNT("Ldev/jason/gboardpatches/extension/clipboard/GboardClipboardRuntime;->resolveColumnCount(Ljava/lang/Object;I)I"),
     CLIPBOARD_RUNTIME_AFTER_LAYOUT("Ldev/jason/gboardpatches/extension/clipboard/GboardClipboardRuntime;->afterLayout(Ljava/lang/Object;)V"),
@@ -52,11 +49,13 @@ internal enum class RuntimeCallId(internal val encodedAbi: String) {
     ADD_SYMBOLS_RUNTIME_REWRITE_PROVIDER_WRAPPER_KEYBOARD_TYPE("Ldev/jason/gboardpatches/extension/addsymbols/GboardAddSymbolsRuntime;->rewriteProviderWrapperKeyboardType(Ljava/lang/Object;)Ljava/lang/Object;"),
     ADD_SYMBOLS_RUNTIME_SHOULD_SKIP_DETACHED_VIEW_TRANSFORM("Ldev/jason/gboardpatches/extension/addsymbols/GboardAddSymbolsRuntime;->shouldSkipDetachedViewTransform(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Z"),
     ADD_SYMBOLS_RUNTIME_SHOULD_SKIP_HEADER_START_EDGE_UPDATE("Ldev/jason/gboardpatches/extension/addsymbols/GboardAddSymbolsRuntime;->shouldSkipHeaderStartEdgeUpdate(Ljava/lang/Object;)Z"),
-    SHOTGUN_KEYBOARD_RUNTIME_MAYBE_PLAY_SHOTGUN_SOUND("Ldev/jason/gboardpatches/extension/shotgunkeyboard/GboardShotgunKeyboardRuntime;->maybePlayShotgunSound(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Z"),
     ADD_SYMBOLS_SOFT_KEY_RUNTIME_PATCH_SOFT_KEY_METADATA("Ldev/jason/gboardpatches/extension/addsymbols/GboardAddSymbolsSoftKeyRuntime;->patchSoftKeyMetadata(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"),
     ADVANCED_VOICE_RUNTIME_AFTER_FLAG_VALUE("Ldev/jason/gboardpatches/extension/advancedvoice/GboardAdvancedVoiceRuntime;->afterFlagValue(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"),
     ADVANCED_VOICE_RUNTIME_INCLUDE_EXACT_ZH_TW_SUPPORTED_LOCALE("Ldev/jason/gboardpatches/extension/advancedvoice/GboardAdvancedVoiceRuntime;->includeExactZhTwSupportedLocale(Ljava/lang/Object;)Ljava/lang/Object;"),
     ADVANCED_VOICE_RUNTIME_SEED_APPLICATION_CONTEXT("Ldev/jason/gboardpatches/extension/advancedvoice/GboardAdvancedVoiceRuntime;->seedApplicationContext(Landroid/content/Context;)V"),
+    AMOLED_THEME_RUNTIME_IS_ACTIVE("Ldev/jason/gboardpatches/extension/theme/AmoledThemeOverride;->isAmoledThemeActive()Z"),
+    AMOLED_THEME_RUNTIME_ADJUST_COLOR("Ldev/jason/gboardpatches/extension/theme/AmoledThemeOverride;->adjustColor(II)I"),
+    AMOLED_THEME_RUNTIME_BLEND_TEXT_COLOR("Ldev/jason/gboardpatches/extension/theme/AmoledThemeOverride;->blendTextColor(II)I"),
     BLUETOOTH_MICROPHONE_RUNTIME_APPLY_OVERRIDDEN_FLAG_VALUE("Ldev/jason/gboardpatches/extension/bluetoothmicrophone/GboardBluetoothMicrophoneRuntime;->applyOverriddenFlagValue(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"),
     CALCULATOR_RUNTIME_ON_INPUT_VIEW_STARTED("Ldev/jason/gboardpatches/extension/calculator/GboardCalculatorLifecycleRuntime;->onInputViewStarted(Ljava/lang/Object;)V"),
     CALCULATOR_RUNTIME_ON_SELECTION_UPDATED("Ldev/jason/gboardpatches/extension/calculator/GboardCalculatorLifecycleRuntime;->onSelectionUpdated(Ljava/lang/Object;Landroid/view/View;II)V"),
@@ -117,6 +116,7 @@ internal enum class RuntimeCallId(internal val encodedAbi: String) {
     ROUNDED_KEYBOARD_RUNTIME_APPLY_THEME_ADMISSION("Ldev/jason/gboardpatches/extension/roundedkeyboard/GboardRoundedKeyboardRuntime;->applyThemeAdmission(Z)Z"),
     ROUNDED_KEYBOARD_RUNTIME_RESOLVE_EFFECTIVE_RADII_DP("Ldev/jason/gboardpatches/extension/roundedkeyboard/GboardRoundedKeyboardRuntime;->resolveEffectiveRadiiDp(Ljava/lang/String;)[F"),
     SETTINGS_HOMEPAGE_RUNTIME_APPLY_SETTINGS_HOMEPAGE_POLICY("Ldev/jason/gboardpatches/extension/settingshomepage/GboardSettingsHomepageRuntime;->applySettingsHomepagePolicy(Ljava/lang/Object;)V"),
+    SHOTGUN_KEYBOARD_RUNTIME_MAYBE_PLAY_SHOTGUN_SOUND("Ldev/jason/gboardpatches/extension/shotgunkeyboard/GboardShotgunKeyboardRuntime;->maybePlayShotgunSound(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Z"),
     SPLIT_KEYBOARD_RUNTIME_APPLY_ACCESS_POINT_STATE("Ldev/jason/gboardpatches/extension/splitkeyboard/GboardSplitKeyboardRuntime;->applyAccessPointState(Ljava/lang/String;I)I"),
     SPLIT_KEYBOARD_RUNTIME_AFTER_MODE_ENVIRONMENT_CHANGED("Ldev/jason/gboardpatches/extension/splitkeyboard/GboardSplitKeyboardRuntime;->afterModeEnvironmentChanged(Ljava/lang/Object;)V"),
     SPLIT_KEYBOARD_RUNTIME_INCLUDE_ACCESS_POINT_IN_ORDER("Ldev/jason/gboardpatches/extension/splitkeyboard/GboardSplitKeyboardRuntime;->includeAccessPointInOrder(Ljava/lang/Object;)Ljava/lang/Object;"),

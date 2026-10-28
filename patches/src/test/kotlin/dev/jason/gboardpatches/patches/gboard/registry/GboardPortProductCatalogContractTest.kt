@@ -662,6 +662,7 @@ class GboardPortProductCatalogContractTest {
             "ai_writing_tools" to "version-sensitive",
             "amoled_monet" to "version-sensitive",
             "amoled_theme" to "version-sensitive",
+            "amoled_monet" to "version-sensitive",
             "backup_restore" to "version-neutral-extension",
             "change_emoji_size" to "version-sensitive",
             "clipboard_custom_character_limit" to "version-sensitive",

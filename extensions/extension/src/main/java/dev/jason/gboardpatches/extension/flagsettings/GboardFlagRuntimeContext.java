@@ -2,6 +2,8 @@ package dev.jason.gboardpatches.extension.flagsettings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
+import android.os.UserManager;
 
 import java.lang.reflect.Method;
 

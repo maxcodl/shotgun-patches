@@ -1,3 +1,15 @@
+## [4.0.0-dev.6](https://github.com/maxcodl/shotgun-patches/compare/v4.0.0-dev.5...v4.0.0-dev.6) (2026-10-28)
+
+### 🐛 Bug Fixes
+
+* **Web Clipboard:** preserve service recovery when the keyboard process starts and the service has stopped while enabled.
+* **Gboard:** preserve local AMOLED, Shotgun Keyboard, and Web Clipboard compatibility while updating to Gboard 18.5.4.
+
+### 🐛 修復
+
+* **Web Clipboard:** 修復 Web Clipboard 已啟用但服務停止後，鍵盤程序啟動時未恢復服務的問題。
+* **Gboard:** 更新至 Gboard 18.5.4 時保留 AMOLED、散彈槍鍵盤及 Web Clipboard 相容性。
+
 ## [4.0.0-dev.5](https://github.com/jasonwu1994/Gboard-patches/compare/v4.0.0-dev.4...v4.0.0-dev.5) (2026-10-25)
 
 ### 🚀 Updated App Support

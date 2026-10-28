@@ -175,7 +175,7 @@ class GboardPortProductCatalogContractTest {
                 }
         }.toSet()
 
-        assertEquals(203, authoritativeKeys.size)
+        assertEquals(204, authoritativeKeys.size)
         assertEquals(authoritativeKeys, requiredKeys)
         assertEquals(
             authoritativeKinds,
@@ -660,6 +660,8 @@ class GboardPortProductCatalogContractTest {
             "add_gboard_signature_bypass" to "version-sensitive",
             "advanced_voice_typing" to "version-sensitive",
             "ai_writing_tools" to "version-sensitive",
+            "amoled_monet" to "version-sensitive",
+            "amoled_theme" to "version-sensitive",
             "backup_restore" to "version-neutral-extension",
             "change_emoji_size" to "version-sensitive",
             "clipboard_custom_character_limit" to "version-sensitive",
@@ -690,6 +692,7 @@ class GboardPortProductCatalogContractTest {
             "quick_insert" to "version-sensitive",
             "rounded_keyboard_panel" to "version-sensitive",
             "settings_homepage_override" to "version-sensitive",
+            "shotgun_keyboard" to "version-sensitive",
             "simple_calculator" to "version-sensitive",
             "swipe_down_to_dismiss_keyboard" to "version-sensitive",
             "swipeable_custom_top_row" to "version-sensitive",

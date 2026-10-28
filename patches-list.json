@@ -14,6 +14,32 @@
       "options": []
     },
     {
+      "name": "AMOLED Monet Keys",
+      "description": "在 AMOLED 純黑背景上保留 Monet 色調的按鍵，可在設定中調整色調強度。\nKeep Monet-tinted keys on the AMOLED black background, with an adjustable tint strength in settings.",
+      "use": false,
+      "dependencies": [
+        "AMOLED Pure Black Theme"
+      ],
+      "compatiblePackages": {
+        "com.google.android.inputmethod.latin": [
+          "18.5.4.993608717-release-arm64-v8a"
+        ]
+      },
+      "options": []
+    },
+    {
+      "name": "AMOLED Pure Black Theme",
+      "description": "在深色模式下將背景與表面顏色覆寫為純黑 (#000000)，並保留強調色彩。\nOverride surfaces and backgrounds with pure black (#000000) in dark mode while keeping accent colors.",
+      "use": true,
+      "dependencies": [],
+      "compatiblePackages": {
+        "com.google.android.inputmethod.latin": [
+          "18.5.4.993608717-release-arm64-v8a"
+        ]
+      },
+      "options": []
+    },
+    {
       "name": "Access Points menu style",
       "description": "切換新版或舊版 Access Points 選單樣式\nSwitch between the new and legacy Access Points menu styles.",
       "use": true,
@@ -366,13 +392,13 @@
           "description": "",
           "required": true,
           "type": "kotlin.String",
-          "default": "GboardWu",
+          "default": "Shotgun",
           "values": {
             "Gboard": "Gboard",
             "Gboard Dev": "Gboard Dev",
             "Gboard Patches": "Gboard Patches",
             "Gboard Mod": "Gboard Mod",
-            "GboardWu": "GboardWu"
+            "Shotgun": "Shotgun"
           }
         }
       ]
@@ -404,6 +430,18 @@
     {
       "name": "Settings Homepage Override",
       "description": "允許切換新版或舊版 Gboard 設定頁面\nAllow switching between the new and legacy Gboard settings pages.",
+      "use": true,
+      "dependencies": [],
+      "compatiblePackages": {
+        "com.google.android.inputmethod.latin": [
+          "18.5.4.993608717-release-arm64-v8a"
+        ]
+      },
+      "options": []
+    },
+    {
+      "name": "Shotgun Keyboard",
+      "description": "擊鍵時播放散彈槍開火音效，空白鍵/換行鍵播放上膛音效，支援耳機與外接裝置自動靜音\nPlay shotgun blast sound on keystrokes, pump sound on Space / Enter, and auto-mute with headphones/external audio.",
       "use": true,
       "dependencies": [],
       "compatiblePackages": {

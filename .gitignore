@@ -119,7 +119,7 @@ gradle-app.setting
 
 # Ignore vscode config
 .vscode/
-release-notes.md
+
 # Dependency directories
 node_modules/
 
@@ -132,7 +132,9 @@ local.properties
 
 # Local patch/build inspection artifacts
 .validation/
-.kotlin
-
-# Generated build output (Gradle / VS Code Java)
+.kotlin/
 patches/bin/
+
+# Local Python caches
+__pycache__/
+*.py[cod]

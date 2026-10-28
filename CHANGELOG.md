@@ -1,34 +1,94 @@
-## [3.13.0-dev.8](https://github.com/maxcodl/shotgun-patches/compare/v3.13.0-dev.7...v3.13.0-dev.8) (2026-10-18)
+## [4.0.0-dev.5](https://github.com/jasonwu1994/Gboard-patches/compare/v4.0.0-dev.4...v4.0.0-dev.5) (2026-10-25)
+
+### 🚀 Updated App Support
+
+* **Gboard:** update the supported Gboard version to `18.5.4.993608717-release-arm64-v8a`.
+
+### 🚀 支援版本更新
+
+* **Gboard:** 更新支援的 Gboard 版本至 `18.5.4.993608717-release-arm64-v8a`。
+
+## [4.0.0-dev.4](https://github.com/jasonwu1994/Gboard-patches/compare/v4.0.0-dev.3...v4.0.0-dev.4) (2026-10-24)
 
 ### 🐛 Bug Fixes
 
-* **Gboard (Web Clipboard):** the phone-side service now starts again after the phone reboots. Before, it stayed off after a reboot while the toggle still showed on.
+* **Gboard:** fix the occasionally blank shortcut toolbar when opening the keyboard with Rambler enabled.
+* **Gboard:** remove the `Hyperspeed Typing Animation` patch because Gboard 18.5.3 no longer includes its core implementation.
 
 ### 🐛 修復
 
-* **Gboard (Web Clipboard):** 手機重新開機後，手機端服務會自動重新啟動。先前重新開機後服務不會啟動，但開關仍顯示為開啟。
+* **Gboard:** 修復啟用 Rambler 時，開啟鍵盤後快捷工具列偶爾空白的問題。
+* **Gboard:** 移除 `Hyperspeed Typing Animation` Patch，因 Gboard 18.5.3 已移除所需的核心實作。
 
-## [3.13.0-dev.7](https://github.com/maxcodl/shotgun-patches/compare/v3.13.0-dev.6...v3.13.0-dev.7) (2026-10-14)
+## [4.0.0-dev.3](https://github.com/jasonwu1994/Gboard-patches/compare/v4.0.0-dev.2...v4.0.0-dev.3) (2026-10-23)
+
+### 🐛 Bug Fixes
+
+* **Gboard:** fix runtime settings access before the first unlock after boot to prevent errors when swiping down to dismiss the keyboard.
+
+### 🐛 修復
+
+* **Gboard:** 修復開機後首次解鎖前，向下滑動關閉鍵盤功能存取設定時可能發生的錯誤。
+
+## [4.0.0-dev.2](https://github.com/jasonwu1994/Gboard-patches/compare/v4.0.0-dev.1...v4.0.0-dev.2) (2026-10-23)
+
+### 🐛 Bug Fixes
+
+* **Gboard:** fix the `Zhuyin Bottom Row Key Sizes` patch so bottom-row keys retain their configured sizes while typing on the Zhuyin keyboard.
+
+### 🐛 修復
+
+* **Gboard:** 修復「注音底排按鍵大小」Patch 在注音輸入時無法維持自訂按鍵大小的問題。
+
+## [4.0.0-dev.1](https://github.com/jasonwu1994/Gboard-patches/compare/v3.13.0...v4.0.0-dev.1) (2026-10-22)
+
+### 🐛 Bug Fixes
+
+* **Gboard:** eliminate brief white or dark background flashes when opening or switching keyboards with custom opacity enabled.
+* **Gboard:** fix black borders around keyboard corners when adjusting custom opacity.
+
+### 🚀 Updated App Support
+
+* **Gboard:** update the supported Gboard version to `18.5.3.993608717-release-arm64-v8a`.
+
+### 🐛 修復
+
+* **Gboard:** 修復啟用自訂透明度後，開啟或切換鍵盤時背景短暫閃白或閃黑的問題。
+* **Gboard:** 修復調整自訂透明度時，鍵盤邊角出現黑邊的問題。
+
+### 🚀 支援版本更新
+
+* **Gboard:** 更新支援的 Gboard 版本至 `18.5.3.993608717-release-arm64-v8a`。
+
+## [3.13.0](https://github.com/jasonwu1994/Gboard-patches/compare/v3.12.0...v3.13.0) (2026-10-15)
 
 ### ✨ New Features
 
-* **Gboard:** add the `AMOLED Monet Keys` patch. On top of `AMOLED Pure Black Theme`, it adds sliders for Background tint, Key tint (0-200), Function key tint (0-200) and Text accent, so the keyboard can be pure black while keys, Shift/Backspace/?123 and icons keep a Monet tint.
-* **Gboard:** the Patches settings pages now follow your Material You colours on Android 12+ instead of fixed blue.
-* **Gboard:** add a `Monet` colour option for the `G Logo on Spacebar` patch, using your system accent colour.
+* **Gboard:** add the `Swipe Down to Dismiss Keyboard` patch, allowing you to dismiss the keyboard by swiping down from the suggestion strip or toolbar.
 
 ### 🐛 Bug Fixes
 
-* **Gboard (Web Clipboard):** the phone-side service now runs as a `connectedDevice` foreground service, so Android no longer stops it after the 6-hour `dataSync` limit while the toggle stays on.
+* **Gboard:** fix an issue where the `Frosted Glass` patch could cause the keyboard to crash when entering the password upon device startup (Direct Boot).
+* **Gboard:** fix the `Swipe Down to Dismiss Keyboard` patch to prevent accidental dismissal during toolbar icon sorting and candidate drag-to-delete.
 
 ### ✨ 新功能
 
-* **Gboard:** 新增 `AMOLED Monet Keys` Patch。搭配 `AMOLED Pure Black Theme`，提供背景色調、按鍵色調（0-200）、功能鍵色調（0-200）與文字輔色滑桿，讓鍵盤保持純黑背景，同時按鍵、Shift/刪除/?123 與圖示保留 Monet 色調。
-* **Gboard:** Patches 設定頁面在 Android 12 以上改為跟隨 Material You 動態色彩，不再使用固定藍色。
-* **Gboard:** `G Logo on Spacebar` Patch 新增 `Monet` 顏色選項，使用系統強調色。
+* **Gboard:** 新增 `Swipe Down to Dismiss Keyboard` Patch，支援從建議列或工具列向下滑動以關閉鍵盤。
 
 ### 🐛 修復
 
-* **Gboard (Web Clipboard):** 手機端服務改為 `connectedDevice` 前景服務，不再於 6 小時 `dataSync` 限制後被 Android 停止（開關仍顯示為開啟）。
+* **Gboard:** 修復 `Frosted Glass` Patch 在裝置開機輸入密碼時（Direct Boot）可能導致鍵盤崩潰的問題。
+* **Gboard:** 修復 `Swipe Down to Dismiss Keyboard` Patch，避免在排序工具列圖示及拖曳候選字刪除時誤觸關閉鍵盤。
+
+## [3.13.0-dev.2](https://github.com/jasonwu1994/Gboard-patches/compare/v3.13.0-dev.1...v3.13.0-dev.2) (2026-10-14)
+
+### 🐛 Bug Fixes
+
+* **Gboard:** fix the `Swipe Down to Dismiss Keyboard` patch to prevent accidental dismissal during toolbar icon sorting and candidate drag-to-delete.
+
+### 🐛 修復
+
+* **Gboard:** 修復 `Swipe Down to Dismiss Keyboard` Patch，避免在排序工具列圖示及拖曳候選字刪除時誤觸關閉鍵盤。
 
 ## [3.13.0-dev.1](https://github.com/jasonwu1994/Gboard-patches/compare/v3.12.1-dev.1...v3.13.0-dev.1) (2026-10-14)
 
@@ -60,107 +120,73 @@
 
 * **Gboard:** 新增 `Frosted Glass` Patch，為鍵盤加入即時背景模糊效果，並支援自訂主題透明度。👀
 
-## [3.12.0-dev.5](https://github.com/Burhanverse/shotgun-patches/compare/v3.11.0-dev.3...v3.12.0-dev.5) (2026-10-01)
+## [3.12.0-dev.5](https://github.com/jasonwu1994/Gboard-patches/compare/v3.11.0...v3.12.0-dev.5) (2026-09-26)
 
 ### ✨ New Features
 
 * **Gboard:** add the `Frosted Glass` patch, bringing real-time background blur and customizable theme transparency to the keyboard. 👀
-* **Gboard:** add the `Toolbar Editing Buttons` patch, which adds Select all, Copy, Cut, and Paste actions to the toolbar menu.
-* **Gboard:** add the `Custom Theme` patch, supporting custom ZIP theme imports and a selection of beautiful themes from Rboard's official repository.
-* **Gboard:** add the `AMOLED Pure Black Theme` patch with AMOLED overrides and preference settings.
-* **Gboard:** preserved custom `Shotgun Keyboard` patch with audio effects and settings.
-
-### 🐛 Bug Fixes
-
-* **Gboard:** fix an issue where `Custom Symbols` history entries were incorrectly saved to `Emoticon` history.
-* **AMOLED Theme:** extract AMOLED theme override bytecode logic into a helper method.
 
 ### ✨ 新功能
 
 * **Gboard:** 新增 `Frosted Glass` Patch，為鍵盤加入即時背景模糊效果，並支援自訂主題透明度。👀
-* **Gboard:** 新增 `Toolbar Editing Buttons` Patch，將「全選」、「複製」、「剪下」與「貼上」操作加入工具列選單。
-* **Gboard:** 新增 `Custom Theme` Patch，支援匯入自訂 ZIP 主題，也能從 Rboard 官方儲存庫匯入精美主題。
-* **Gboard:** 新增 `AMOLED Pure Black Theme` Patch，提供 AMOLED 覆蓋與偏好設定。
-* **Gboard:** 完整保留自訂 `Shotgun Keyboard` 散彈槍鍵盤音效與設定。
 
-### 🐛 錯誤修復
-
-* **Gboard:** 修復 `Custom Symbols` 歷史記錄誤寫入 `Emoticon` 歷史記錄的問題。
-* **AMOLED Theme:** 將 AMOLED 主題覆寫位元組碼邏輯提煉為輔助方法。
-
-## [3.11.0-dev.3](https://github.com/Burhanverse/shotgun-patches/compare/v3.11.0-dev.2...v3.11.0-dev.3) (2026-09-16)
-
-### 🐛 Bug Fixes
-
-* **AMOLED Theme:** extract AMOLED theme override bytecode logic into a helper method.
-
-### 🐛 錯誤修復
-
-* **AMOLED Theme:** 將 AMOLED 主題覆寫位元組碼邏輯提煉為輔助方法。
-
-## [3.11.0-dev.2](https://github.com/Burhanverse/shotgun-patches/compare/v3.11.0-dev.1...v3.11.0-dev.2) (2026-09-16)
-
-### 🐛 Bug Fixes
-
-* **AMOLED Theme:** replace AMOLED theme override runtime call with active status check and direct color assignments.
-
-### 🐛 錯誤修復
-
-* **AMOLED Theme:** 將 AMOLED 主題覆寫執行期呼叫替換為啟用狀態檢查與直接顏色賦值。
-
-## [3.11.0-dev.1](https://github.com/Burhanverse/shotgun-patches/compare/v3.10.0-dev.11...v3.11.0-dev.1) (2026-09-16)
+## [3.11.0](https://github.com/jasonwu1994/Gboard-patches/compare/v3.10.0...v3.11.0) (2026-09-22)
 
 ### ✨ New Features
 
-* **Gboard:** add AMOLED pure black theme patch with AMOLED overrides and preference settings.
+* **Gboard:** add the `Toolbar Editing Buttons` patch, which adds Select all, Copy, Cut, and Paste actions to the toolbar menu.
+* **Gboard:** add the `Custom Theme` patch, supporting custom ZIP theme imports and a selection of beautiful themes from Rboard's official repository.
+
+### 🐛 Bug Fixes
+
+* **Gboard:** fix an issue where `Custom Symbols` history entries were incorrectly saved to `Emoticon` history.
 
 ### ✨ 新功能
 
-* **Gboard:** 新增 AMOLED 純黑主題 Patch，提供 AMOLED 覆蓋與偏好設定。
+* **Gboard:** 新增 `Toolbar Editing Buttons` Patch，將「全選」、「複製」、「剪下」與「貼上」操作加入工具列選單。
+* **Gboard:** 新增 `Custom Theme` Patch，支援匯入自訂 ZIP 主題，也能從 Rboard 官方儲存庫匯入精美主題。
 
-## [3.10.0-dev.11](https://github.com/Burhanverse/shotgun-patches/compare/v3.10.0-dev.10...v3.10.0-dev.11) (2026-09-16)
+### 🐛 修復
 
-### ♻️ Code Refactoring
+* **Gboard:** 修復 `Custom Symbols` 歷史記錄誤寫入 `Emoticon` 歷史記錄的問題。
 
-* **Web Clipboard / LAN FTP:** consolidate mDNS removal and clean up preferences into squashed patch release.
+## [3.11.0-dev.3](https://github.com/jasonwu1994/Gboard-patches/compare/v3.11.0-dev.2...v3.11.0-dev.3) (2026-09-20)
 
-### ♻️ 程式碼重構
+### ✨ New Features
 
-* **Web Clipboard / LAN FTP:** 整合移除 mDNS 與清理偏好設定至壓縮整理後的 Patch 版本。
+* **Gboard:** add the `Toolbar Editing Buttons` patch, which adds Select all, Copy, Cut, and Paste actions to the toolbar menu.
 
-## [3.10.0-dev.10](https://github.com/Burhanverse/shotgun-patches/compare/v3.10.0-dev.5...v3.10.0-dev.10) (2026-09-16)
+### ✨ 新功能
 
-### ♻️ Code Refactoring
+* **Gboard:** 新增 `Toolbar Editing Buttons` Patch，將「全選」、「複製」、「剪下」與「貼上」操作加入工具列選單。
 
-* **Web Clipboard / LAN FTP:** remove mDNS advertisers and clean up unused preferences.
+## [3.11.0-dev.2](https://github.com/jasonwu1994/Gboard-patches/compare/v3.10.0...v3.11.0-dev.2) (2026-09-18)
 
-### ♻️ 程式碼重構
+### ✨ New Features
 
-* **Web Clipboard / LAN FTP:** 移除 mDNS 廣播器並清理未使用的偏好設定。
+* **Gboard:** add the `Custom Theme` patch, supporting custom ZIP theme imports and a selection of beautiful themes from Rboard's official repository.
 
-## [3.10.0-dev.4](https://github.com/Burhanverse/shotgun-patches/compare/v3.10.0-dev.3...v3.10.0-dev.4) (2026-09-15)
+### 🐛 Bug Fixes
+
+* **Gboard:** fix an issue where `Custom Symbols` history entries were incorrectly saved to `Emoticon` history.
+
+### ✨ 新功能
+
+* **Gboard:** 新增 `Custom Theme` Patch，支援匯入自訂 ZIP 主題，也能從 Rboard 官方儲存庫匯入精美主題。
+
+### 🐛 修復
+
+* **Gboard:** 修復 `Custom Symbols` 歷史記錄誤寫入 `Emoticon` 歷史記錄的問題。
+
+## [3.10.0](https://github.com/jasonwu1994/Gboard-patches/compare/v3.9.0...v3.10.0) (2026-09-02)
 
 ### ✨ New Features
 
 * **Gboard:** add the `Backup & Restore` patch for exporting and restoring all patch settings, and for backing up, comparing, and restoring Gboard's PB/XML flag stores.
-* **Gboard:** add the `Simple Calculator` patch. Enter an expression directly to display both the expression and its result in Gboard's suggestion strip.
-* **Gboard:** add the `FTP Server` patch, providing a LAN FTP server for browsing and transferring files with resume support.
-* **Gboard:** preserved the custom `Shotgun Keyboard` patch with audio effects and settings.
-
-### 🐛 Bug Fixes
-
-* **Web Clipboard:** update tile activation logic to fallback to service running state and improve service detection.
 
 ### ✨ 新功能
 
 * **Gboard:** 新增 `Backup & Restore` Patch，可匯出與還原所有 Patch 設定，並支援備份、比較及還原 Gboard 的 PB/XML flag store。
-* **Gboard:** 新增 `Simple Calculator` Patch；直接輸入算式，即可在 Gboard 推薦列顯示算式與計算結果。
-* **Gboard:** 新增 `FTP Server` Patch，提供區域網路 FTP 伺服器，支援檔案瀏覽、傳輸與續傳。
-* **Gboard:** 保留自訂 `Shotgun Keyboard` Patch，包含音效與設定功能。
-
-### 🐛 修復
-
-* **Web Clipboard:** 更新 tile 啟動邏輯，改為以服務運行狀態為後備，並改善服務偵測機制。
 
 ## [3.10.0-dev.3](https://github.com/jasonwu1994/Gboard-patches/compare/v3.9.0...v3.10.0-dev.3) (2026-09-01)
 
@@ -251,7 +277,6 @@
 * **Gboard:** 修復 `Long-Press Editing Shortcuts` Patch：當要複製或剪下的文字為空字串時，不再執行 `Copy` 或 `Cut`，避免空內容的複製／剪下操作。
 
 ## [3.7.0-dev.2](https://github.com/jasonwu1994/Gboard-patches/compare/v3.7.0-dev.1...v3.7.0-dev.2) (2026-08-30)
->>>>>>> upstream/dev
 
 ### ✨ New Features
 
@@ -261,7 +286,7 @@
 
 * **Gboard:** 擴充 `Long-Press Editing Shortcuts` Patch，現在支援更多鍵盤配置。
 
-## [3.7.0-dev.1](https://github.com/Burhanverse/shotgun-patches/compare/v3.6.0-dev.2...v3.7.0-dev.1) (2026-08-28)
+## [3.7.0-dev.1](https://github.com/jasonwu1994/Gboard-patches/compare/v3.6.0...v3.7.0-dev.1) (2026-08-28)
 
 ### ✨ New Features
 
@@ -279,7 +304,7 @@
 
 * **Gboard:** 修復 `Long-Press Editing Shortcuts` Patch：當要複製或剪下的文字為空字串時，不再執行 `Copy` 或 `Cut`，避免空內容的複製／剪下操作。
 
-## [3.6.0-dev.2](https://github.com/Burhanverse/shotgun-patches/compare/v3.6.0-dev.1...v3.6.0-dev.2) (2026-08-29)
+## [3.6.0](https://github.com/jasonwu1994/Gboard-patches/compare/v3.5.0...v3.6.0) (2026-08-27)
 
 ### ✨ New Features
 
@@ -289,7 +314,17 @@
 
 * **Gboard:** 新增 `Floating Web Search` Patch，可直接從 Gboard 開啟懸浮網頁，快速搜尋需要的資訊。
 
-## [3.5.0](https://github.com/Burhanverse/shotgun-patches/compare/v3.4.0...v3.5.0) (2026-08-26)
+## [3.6.0-dev.1](https://github.com/jasonwu1994/Gboard-patches/compare/v3.5.0...v3.6.0-dev.1) (2026-08-26)
+
+### ✨ New Features
+
+* **Gboard:** add the `Floating Web Search` patch, which opens a floating web page directly from Gboard so you can quickly search for the information you need.
+
+### ✨ 新功能
+
+* **Gboard:** 新增 `Floating Web Search` Patch，可直接從 Gboard 開啟懸浮網頁，快速搜尋需要的資訊。
+
+## [3.5.0](https://github.com/jasonwu1994/Gboard-patches/compare/v3.4.0...v3.5.0) (2026-08-26)
 
 ### ✨ New Features
 
@@ -299,7 +334,7 @@
 
 * **Gboard:** 新增 `Top Toolbar Item Count` Patch，可自訂 Gboard 頂端工具列項目數量。
 
-## [3.5.0-dev.1](https://github.com/Burhanverse/shotgun-patches/compare/v3.4.0...v3.5.0-dev.1) (2026-08-25)
+## [3.5.0-dev.1](https://github.com/jasonwu1994/Gboard-patches/compare/v3.4.0...v3.5.0-dev.1) (2026-08-25)
 
 ### ✨ New Features
 
@@ -309,7 +344,7 @@
 
 * **Gboard:** 新增 `Top Toolbar Item Count` Patch，可自訂 Gboard 頂端工具列項目數量。
 
-## [3.4.0](https://github.com/Burhanverse/shotgun-patches/compare/v3.3.0...v3.4.0) (2026-08-25)
+## [3.4.0](https://github.com/jasonwu1994/Gboard-patches/compare/v3.3.0...v3.4.0) (2026-08-25)
 
 ### ✨ New Features
 
@@ -319,89 +354,65 @@
 
 * **Gboard:** 新增 `Rounded Keyboard Panel` Patch，可自訂鍵盤面板哪些角落呈現圓角，並可分別設定上方與下方半徑。
 
-## [3.4.0-dev.5](https://github.com/Burhanverse/shotgun-patches/compare/v3.4.0-dev.4...v3.4.0-dev.5) (2026-08-25)
-
-### 🐛 Bug Fixes
-
-* **Web Clipboard:** ensure monotonic image ID tracking in ScreenshotCaptureObserver to prevent historical screenshot resends.
-
-### 🐛 修復
-
-* **Web Clipboard:** 在 ScreenshotCaptureObserver 中確保單調遞增的圖片 ID 追蹤，以避免歷史螢幕截圖被重複發送。
-
-## [3.4.0-dev.4](https://github.com/Burhanverse/shotgun-patches/compare/v3.4.0-dev.3...v3.4.0-dev.4) (2026-08-25)
-
-### 🐛 Bug Fixes
-
-* **Web Clipboard:** implement unique clipId propagation and permanent state echo suppression on Android.
-
-### 🐛 修復
-
-* **Web Clipboard:** 實作唯一 clipId 傳遞機制與 Android 端永久狀態回音抑制。
-
-## [3.4.0-dev.3](https://github.com/Burhanverse/shotgun-patches/compare/v3.4.0-dev.2...v3.4.0-dev.3) (2026-08-25)
-
-### 🐛 Bug Fixes
-
-* **Web Clipboard:** preserve echo suppression across multiple system listeners and expand suppression window to prevent feedback loops.
-
-### 🐛 修復
-
-* **Web Clipboard:** 在多個系統監聽器之間保持回音抑制狀態，並擴大抑制時間範圍以避免循環回饋。
-
-## [3.4.0-dev.2](https://github.com/Burhanverse/shotgun-patches/compare/v3.4.0-dev.1...v3.4.0-dev.2) (2026-08-25)
+## [3.4.0-dev.1](https://github.com/jasonwu1994/Gboard-patches/compare/v3.3.0...v3.4.0-dev.1) (2026-08-25)
 
 ### ✨ New Features
 
-* **Web Clipboard:** save incoming desktop images into MediaStore Screenshots directory to trigger Gboard's native screenshot suggestion chip.
+* **Gboard:** add the `Rounded Keyboard Panel` patch, which lets you choose which corners of the keyboard panel are rounded and configure the top and bottom corner radii independently.
 
 ### ✨ 新功能
 
-* **Web Clipboard:** 將電腦端傳送的圖片儲存至 MediaStore 螢幕截圖目錄，以觸發 Gboard 原生螢幕截圖建議卡片。
+* **Gboard:** 新增 `Rounded Keyboard Panel` Patch，可自訂鍵盤面板哪些角落呈現圓角，並可分別設定上方與下方半徑。
 
-## [3.4.0-dev.1](https://github.com/Burhanverse/shotgun-patches/compare/v3.3.1...v3.4.0-dev.1) (2026-08-25)
+## [3.3.0](https://github.com/jasonwu1994/Gboard-patches/compare/v3.2.0...v3.3.0) (2026-08-25)
 
 ### ✨ New Features
 
-* **Web Clipboard:** add MediaStore observer to detect and synchronize new screenshots in real time between Gboard and desktop Web Clipboard clients.
+* **Gboard:** add a restart button to the top-right corner of the `Patches` page.<br>
+  🤡 Previously, applying changes required long-pressing the app icon → opening App info → tapping Force stop → returning to the Home screen → opening Gboard → selecting Gboard as the keyboard.<br>
+  😎 Now, one tap quickly restarts Gboard, applies your changes, and automatically returns you to the `Patches` page—greatly improving the experience.
 
 ### ✨ 新功能
 
-* **Web Clipboard:** 加入 MediaStore 監聽器，即時偵測並在 Gboard 與電腦剪貼簿之間同步最新的螢幕截圖。
+* **Gboard:** 在 `Patches` 頁面右上角新增重新啟動按鈕。<br>
+  🤡 過去要讓修改生效，必須長按 App 圖示 → 進入系統 App 資訊 → 點選強制停止 → 回到桌面開啟 Gboard → 選擇 Gboard 為鍵盤，才能看到修改效果。<br>
+  😎 現在只需點一下，就能快速重新啟動 Gboard、讓修改生效，並在重啟後自動回到 `Patches` 頁面，大幅提升使用體驗。
 
-## [3.3.1](https://github.com/Burhanverse/shotgun-patches/compare/v3.3.0...v3.3.1) (2026-08-25)
-
-### 🐛 Bug Fixes
-
-* **Web Clipboard:** grant URI read permissions and add explicit MIME type array for desktop image synchronization.
-
-### 🐛 修復
-
-* **Web Clipboard:** 加入 URI 讀取授權與明確 MIME 類型陣列，修正電腦圖片同步至剪貼簿的權限問題。
-
-## [3.3.0](https://github.com/Burhanverse/shotgun-patches/compare/v3.2.0...v3.3.0) (2026-08-25)
+## [3.3.0-dev.1](https://github.com/jasonwu1994/Gboard-patches/compare/v3.2.0...v3.3.0-dev.1) (2026-08-24)
 
 ### ✨ New Features
 
-* **Web Clipboard:** add image and screenshot clipboard synchronization support between Gboard and desktop browsers.
-* **Gboard:** add the `Package Rename` patch, which lets you customize the app name. It defaults to `Shotgun` so you can distinguish it from the official `Gboard` when switching keyboards, and you can change it to any name you prefer.
+* **Gboard:** add a restart button to the top-right corner of the `Patches` page.<br>
+  🤡 Previously, applying changes required long-pressing the app icon → opening App info → tapping Force stop → returning to the Home screen → opening Gboard → selecting Gboard as the keyboard.<br>
+  😎 Now, one tap quickly restarts Gboard, applies your changes, and automatically returns you to the `Patches` page—greatly improving the experience.
 
 ### ✨ 新功能
 
-* **Web Clipboard:** 新增手機與電腦瀏覽器之間的圖片與螢幕擷圖剪貼簿同步支援。
-* **Gboard:** 新增 `Package Rename` Patch，可自訂 App 名稱；預設為 `Shotgun`，方便在切換鍵盤時與官方 `Gboard` 名稱區分，也可自行改成任何想要的名稱。
+* **Gboard:** 在 `Patches` 頁面右上角新增重新啟動按鈕。<br>
+  🤡 過去要讓修改生效，必須長按 App 圖示 → 進入系統 App 資訊 → 點選強制停止 → 回到桌面開啟 Gboard → 選擇 Gboard 為鍵盤，才能看到修改效果。<br>
+  😎 現在只需點一下，就能快速重新啟動 Gboard、讓修改生效，並在重啟後自動回到 `Patches` 頁面，大幅提升使用體驗。
 
-## [3.2.0-dev.1](https://github.com/Burhanverse/shotgun-patches/compare/v3.1.0-dev.1...v3.2.0-dev.1) (2026-08-24)
+## [3.2.0](https://github.com/jasonwu1994/Gboard-patches/compare/v3.1.0...v3.2.0) (2026-08-24)
 
 ### ✨ New Features
 
-* **Gboard:** add the `Package Rename` patch, which lets you customize the app name. It defaults to `Shotgun` so you can distinguish it from the official `Gboard` when switching keyboards, and you can change it to any name you prefer.
+* **Gboard:** add the `Package Rename` patch, which lets you customize the app name. It defaults to `GboardWu` 😂 so you can distinguish it from the official `Gboard` when switching keyboards, and you can change it to any name you prefer.
 
 ### ✨ 新功能
 
-* **Gboard:** 新增 `Package Rename` Patch，可自訂 App 名稱；預設為 `Shotgun`，方便在切換鍵盤時與官方 `Gboard` 名稱區分，也可自行改成任何想要的名稱。
+* **Gboard:** 新增 `Package Rename` Patch，可自訂 App 名稱；預設為 `GboardWu` 😂，方便在切換鍵盤時與官方 `Gboard` 名稱區分，也可自行改成任何想要的名稱。
 
-## [3.1.0-dev.1](https://github.com/Burhanverse/shotgun-patches/compare/v3.0.0-dev.4...v3.1.0-dev.1) (2026-08-23)
+## [3.2.0-dev.1](https://github.com/jasonwu1994/Gboard-patches/compare/v3.1.0...v3.2.0-dev.1) (2026-08-23)
+
+### ✨ New Features
+
+* **Gboard:** add the `Package Rename` patch, which lets you customize the app name. It defaults to `GboardWu` 😂 so you can distinguish it from the official `Gboard` when switching keyboards, and you can change it to any name you prefer.
+
+### ✨ 新功能
+
+* **Gboard:** 新增 `Package Rename` Patch，可自訂 App 名稱；預設為 `GboardWu` 😂，方便在切換鍵盤時與官方 `Gboard` 名稱區分，也可自行改成任何想要的名稱。
+
+## [3.1.0](https://github.com/jasonwu1994/Gboard-patches/compare/v3.0.0...v3.1.0) (2026-08-23)
 
 ### ✨ New Features
 
@@ -423,35 +434,27 @@
 
 * **Gboard:** 強化 Android 17 的 QuickJS 原生程式庫載入相容性。
 
-## [3.0.0-dev.4](https://github.com/Burhanverse/shotgun-patches/compare/v3.0.0-dev.3...v3.0.0-dev.4) (2026-08-22)
-
-### 🐛 Bug Fixes
-
-* **Settings UI:** fix slider row layout weight bug, restore slider title & live value display, and remove empty vertical gap.
-
-### 🐛 問題修復
-
-* **設定介面:** 修復滑桿排版 weight 異常、恢復滑桿標題與即時數值顯示並消除空白間距。
-
-## [3.0.0-dev.3](https://github.com/Burhanverse/shotgun-patches/compare/v3.0.0-dev.2...v3.0.0-dev.3) (2026-08-22)
-
-### 🐛 Bug Fixes
-
-* **Shotgun Keyboard:** fix audio resource loading by embedding payload in bytecode, fix playback context resolution, and polish settings UI layout.
-
-### 🐛 問題修復
-
-* **散彈槍音效鍵盤:** 修復音訊資源載入、播放上下文解析並優化設定介面佈局。
-
-## [3.0.0-dev.2](https://github.com/Burhanverse/shotgun-patches/compare/v3.0.0-dev.1...v3.0.0-dev.2) (2026-08-22)
+## [3.1.0-dev.1](https://github.com/jasonwu1994/Gboard-patches/compare/v3.0.0...v3.1.0-dev.1) (2026-08-23)
 
 ### ✨ New Features
 
-* **Gboard:** add the `Shotgun Keyboard` patch.
+* **Gboard:** add the `Quick Insert` patch, which enables the Quick Insert panel and toolbar access point.
+* **Gboard:** add the `Hyperspeed Typing Animation` patch, which shows an animation during sustained fast typing on all keyboards.
+* **Gboard:** add the `Close Proactive Suggestions` patch, which adds a dismiss button to the proactive suggestions bar.
+
+### 🐛 Bug Fixes
+
+* **Gboard:** harden QuickJS native library loading for Android 17.
 
 ### ✨ 新功能
 
-* **Gboard:** 新增 `Shotgun Keyboard` Patch。
+* **Gboard:** 新增 `Quick Insert` Patch，啟用 Quick Insert 面板與工具列入口。
+* **Gboard:** 新增 `Hyperspeed Typing Animation` Patch，在所有鍵盤持續快速輸入時顯示動畫。
+* **Gboard:** 新增 `Close Proactive Suggestions` Patch，在主動建議列顯示關閉按鈕。
+
+### 🐛 修復
+
+* **Gboard:** 強化 Android 17 的 QuickJS 原生程式庫載入相容性。
 
 ## [3.0.0](https://github.com/jasonwu1994/Gboard-patches/compare/v2.11.0...v3.0.0) (2026-08-22)
 

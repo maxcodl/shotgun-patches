@@ -39,6 +39,7 @@ jobs:
 
   release:
     name: Release
+    if: startsWith(github.ref, 'refs/tags/v')
     permissions:
       contents: write
       packages: read

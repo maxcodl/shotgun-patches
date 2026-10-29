@@ -57,14 +57,25 @@ internal fun MutableMethod.applyManualIncognitoAfterBooleanCall(
         check(existing == 1) { "Duplicate manual incognito clipboard delegates" }
         return
     }
-    val invokeIndex = instructions.indices.singleOrNull { index ->
+    val exactInvokeIndices = instructions.indices.filter { index ->
         val reference = (instructions[index] as? ReferenceInstruction)
             ?.reference as? MethodReference
         reference?.definingClass == owner &&
             reference.name == name &&
             reference.parameterTypes.isEmpty() &&
             reference.returnType == "Z"
-    } ?: error("Could not find exact $owner->$name()Z call in $definingClass->${this.name}")
+    }
+    val invokeIndex = when {
+        exactInvokeIndices.size == 1 -> exactInvokeIndices.single()
+        exactInvokeIndices.size > 1 -> error("Found multiple exact $owner->$name()Z calls in $definingClass->${this.name}")
+        else -> instructions.indices.singleOrNull { index ->
+            val reference = (instructions[index] as? ReferenceInstruction)
+                ?.reference as? MethodReference
+            reference?.name == name &&
+                reference.parameterTypes.isEmpty() &&
+                reference.returnType == "Z"
+        } ?: error("Could not find unique $name()Z call in $definingClass->${this.name}")
+    }
     val moveResultIndex = invokeIndex + 1
     val register = (instructions.getOrNull(moveResultIndex) as? OneRegisterInstruction)
         ?.registerA

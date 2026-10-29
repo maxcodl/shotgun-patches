@@ -1,3 +1,15 @@
+## [4.0.0-dev.10](https://github.com/maxcodl/shotgun-patches/compare/v4.0.0-dev.9...v4.0.0-dev.10) (2026-10-29)
+
+### 🐛 Bug Fixes & Release Automation
+
+* **Incognito Mode Toggle:** tolerate Gboard 18.5.4 obfuscation changes when locating the clipboard policy boolean helper.
+* **Release automation:** build and validate the patch bundle automatically on every `dev` push while keeping GitHub releases tag-only.
+
+### 🐛 修復與發布自動化
+
+* **無痕模式切換:** 容許 Gboard 18.5.4 混淆類別名稱變更，正確定位剪貼簿政策布林輔助方法。
+* **發布自動化:** 每次推送至 `dev` 自動建置並驗證補丁套件，同時維持僅由標籤發布 GitHub Release。
+
 ## [4.0.0-dev.6](https://github.com/Burhanverse/shotgun-patches/compare/v4.0.0-dev.5...v4.0.0-dev.6) (2026-10-28)
 
 ### 🚀 Updated App Support & Compatibility

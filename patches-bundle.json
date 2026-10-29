@@ -1,7 +1,7 @@
 {
-  "created_at": "2026-10-29T14:56:12+05:30",
-  "description": "### 🚀 Updates\n\n* **Hyperspeed Typing Animation:** restore the fast-typing animation for Gboard 18.5.4 as an independent gesture patch.\n* **Release metadata:** publish a new patch bundle version so clients can refresh from the latest release instead of retaining the obsolete 2.11.0 source.\n\n### 🚀 更新\n\n* **Hyperspeed Typing Animation:** 以獨立手勢修補程式恢復 Gboard 18.5.4 的快速輸入動畫。\n* **版本資訊:** 發布新的修補程式套件版本，避免用戶持續使用過時的 2.11.0 來源。",
-  "download_url": "https://github.com/maxcodl/shotgun-patches/releases/download/v4.0.0-dev.8/patches-4.0.0-dev.8.mpp",
+  "created_at": "2026-10-29T15:13:56+05:30",
+  "description": "### 🐛 Bug Fixes\n\n* **Morphe source:** publish the current patch bundle to the Burhanverse repository used by the Add Source link, so refresh no longer resolves the obsolete 2.11.0 bundle.\n\n### 🐛 修復\n\n* **Morphe 來源:** 將目前的修補程式套件發布至 Add Source 連結使用的 Burhanverse 儲存庫，避免重新整理後仍解析到過時的 2.11.0 套件。",
+  "download_url": "https://github.com/Burhanverse/shotgun-patches/releases/download/v4.0.0-dev.9/patches-4.0.0-dev.9.mpp",
   "signature_download_url": "",
-  "version": "4.0.0-dev.8"
+  "version": "4.0.0-dev.9"
 }

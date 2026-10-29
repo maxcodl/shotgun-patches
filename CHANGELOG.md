@@ -1,3 +1,13 @@
+## [4.0.0-dev.9](https://github.com/Burhanverse/shotgun-patches/compare/v4.0.0-dev.8...v4.0.0-dev.9) (2026-10-29)
+
+### 🐛 Bug Fixes
+
+* **Morphe source:** publish the current patch bundle to the Burhanverse repository used by the Add Source link, so refresh no longer resolves the obsolete 2.11.0 bundle.
+
+### 🐛 修復
+
+* **Morphe 來源:** 將目前的修補程式套件發布至 Add Source 連結使用的 Burhanverse 儲存庫，避免重新整理後仍解析到過時的 2.11.0 套件。
+
 ## [4.0.0-dev.8](https://github.com/maxcodl/shotgun-patches/compare/v4.0.0-dev.7...v4.0.0-dev.8) (2026-10-29)
 
 ### 🚀 Updates

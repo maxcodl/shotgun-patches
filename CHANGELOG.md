@@ -1,3 +1,15 @@
+## [4.0.0-dev.8](https://github.com/maxcodl/shotgun-patches/compare/v4.0.0-dev.7...v4.0.0-dev.8) (2026-10-29)
+
+### 🚀 Updates
+
+* **Hyperspeed Typing Animation:** restore the fast-typing animation for Gboard 18.5.4 as an independent gesture patch.
+* **Release metadata:** publish a new patch bundle version so clients can refresh from the latest release instead of retaining the obsolete 2.11.0 source.
+
+### 🚀 更新
+
+* **Hyperspeed Typing Animation:** 以獨立手勢修補程式恢復 Gboard 18.5.4 的快速輸入動畫。
+* **版本資訊:** 發布新的修補程式套件版本，避免用戶持續使用過時的 2.11.0 來源。
+
 ## [4.0.0-dev.6](https://github.com/maxcodl/shotgun-patches/compare/v4.0.0-dev.5...v4.0.0-dev.6) (2026-10-28)
 
 ### 🐛 Bug Fixes

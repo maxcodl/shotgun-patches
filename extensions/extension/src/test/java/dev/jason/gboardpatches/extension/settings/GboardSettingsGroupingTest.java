@@ -37,7 +37,7 @@ public final class GboardSettingsGroupingTest {
         Assert.assertEquals(1, sections.size());
 
         Object section = sections.get(0);
-        Assert.assertEquals("Features", reflectString(section, "getTitle"));
+        Assert.assertNull(reflectString(section, "getTitle"));
         List<?> items = reflectList(section, "getItems");
         Assert.assertEquals(1, items.size());
 
@@ -108,8 +108,15 @@ public final class GboardSettingsGroupingTest {
                 "new GboardManualIncognitoSettingsFeature(context)",
                 "new GboardLongPressQuickActionsSettingsFeature(context)",
                 "new GboardCursorTrackpadSettingsFeature(context)",
-                "new GboardOcrSettingsFeature(context)");
+                "new GboardOcrSettingsFeature(context)",
+                "new GboardQuickInsertSettingsFeature(context)",
+                "new GboardFloatingWebSearchSettingsFeature(context)",
+                "new GboardCalculatorSettingsFeature(context)",
+                "new GboardSwipeDismissSettingsFeature(context)");
         assertInOrder(layoutGroupSource.substring(layoutGroupSource.indexOf("Arrays.asList(")),
+                "new GboardSpacebarLogoSettingsFeature(context)",
+                "new GboardFlowModeSettingsFeature(context)",
+                "new GboardCloseProactiveSuggestionsSettingsFeature(context)",
                 "new GboardLatinGlobeKeyIgnoreIntervalSettingsFeature(context)",
                 "new GboardEnglishUppercaseToggleSettingsFeature(context)",
                 "new GboardZhuyinBottomRowWeightSettingsFeature(context)",
@@ -117,7 +124,10 @@ public final class GboardSettingsGroupingTest {
                 "new GboardEmojiSizeSettingsFeature(context)",
                 "new GboardAccessPointsMenuSettingsFeature(context)",
                 "new GboardSplitKeyboardSettingsFeature(context)",
-                "new GboardAccessibilityLayoutSettingsFeature(context)");
+                "new GboardAccessibilityLayoutSettingsFeature(context)",
+                "new GboardRoundedKeyboardSettingsFeature(context)",
+                "new GboardAmoledThemeSettingsFeature(context)",
+                "new GboardAccessPointCountSettingsFeature(context)");
         Assert.assertFalse(registrySource.contains("GboardKeyboardSettingsGroupFeature"));
     }
 
@@ -131,6 +141,22 @@ public final class GboardSettingsGroupingTest {
         Assert.assertTrue(availabilitySource.contains("FEATURE_BLUETOOTH_MICROPHONE"));
         Assert.assertTrue(availabilitySource.contains(
                 "dev.jason.gboardpatches.feature.bluetooth_microphone"));
+        Assert.assertTrue(availabilitySource.contains(
+                "dev.jason.gboardpatches.feature.close_proactive_suggestions"));
+        Assert.assertTrue(availabilitySource.contains("FEATURE_FLOW_MODE_ANIMATION"));
+        Assert.assertTrue(availabilitySource.contains(
+                "dev.jason.gboardpatches.feature.flow_mode_animation"));
+        Assert.assertTrue(availabilitySource.contains(
+                "dev.jason.gboardpatches.feature.quick_insert"));
+        Assert.assertTrue(availabilitySource.contains("FEATURE_ACCESS_POINT_COUNT"));
+        Assert.assertTrue(availabilitySource.contains(
+                "dev.jason.gboardpatches.feature.access_point_count"));
+        Assert.assertTrue(availabilitySource.contains("FEATURE_AMOLED_THEME"));
+        Assert.assertTrue(availabilitySource.contains(
+                "dev.jason.gboardpatches.feature.amoled_theme"));
+        Assert.assertTrue(availabilitySource.contains("FEATURE_SWIPE_DISMISS"));
+        Assert.assertTrue(availabilitySource.contains(
+                "dev.jason.gboardpatches.feature.swipe_dismiss"));
     }
 
     @Test
@@ -165,7 +191,7 @@ public final class GboardSettingsGroupingTest {
     }
 
     @Test
-    public void rootScreenSeparatesPreferenceFeatureAndAboutSections() throws Exception {
+    public void rootScreenOrdersFeaturePreferenceAndAboutSections() throws Exception {
         RecordingHost host = new RecordingHost();
         FakeFeature symbolFooterFeature = new FakeFeature(
                 "Emojis, stickers & GIFs Tab Order",
@@ -194,8 +220,8 @@ public final class GboardSettingsGroupingTest {
         List<?> rootSections = reflectList(rootScreen, "getSections");
         Assert.assertEquals(3, rootSections.size());
         Assert.assertEquals("Features", reflectString(rootSections.get(0), "getTitle"));
-        Assert.assertEquals("About", reflectString(rootSections.get(1), "getTitle"));
-        Assert.assertEquals("Preferences", reflectString(rootSections.get(2), "getTitle"));
+        Assert.assertEquals("Preferences", reflectString(rootSections.get(1), "getTitle"));
+        Assert.assertEquals("About", reflectString(rootSections.get(2), "getTitle"));
 
         Object keyboardRow = findItem(rootScreen, "Keyboard");
         Assert.assertEquals("NavigationRow", keyboardRow.getClass().getSimpleName());

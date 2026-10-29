@@ -50,6 +50,7 @@ public final class WebClipboardTileController {
         if (context == null) {
             return enabled;
         }
+        if (enabled && !WebClipboardLocalNetworkPermission.isGranted(context)) return false;
         try {
             Context appContext = context.getApplicationContext() != null
                     ? context.getApplicationContext()
@@ -62,7 +63,6 @@ public final class WebClipboardTileController {
             } else {
                 ClipboardSyncService.requestStop(appContext);
             }
-            requestTileRefresh(appContext);
         } catch (Throwable throwable) {
             Log.w(TAG, "Failed to apply Web Clipboard enabled state", throwable);
         }
@@ -157,7 +157,7 @@ public final class WebClipboardTileController {
     }
 
     public static boolean isTileActive(SharedPreferences preferences, boolean serviceRunning) {
-        return isEnabled(preferences) && isRuntimeActive(preferences);
+        return isEnabled(preferences) && (isRuntimeActive(preferences) || serviceRunning);
     }
 
     public static boolean shouldRestoreService(SharedPreferences preferences,
@@ -191,6 +191,9 @@ public final class WebClipboardTileController {
     }
 
     public static boolean isServiceRunning(Context context) {
+        if (ClipboardSyncService.isServiceRunning()) {
+            return true;
+        }
         if (context == null) {
             return false;
         }
@@ -236,7 +239,7 @@ public final class WebClipboardTileController {
         }
     }
 
-    public static void reconcileAfterPackageReplace(Context context) {
+    public static void reconcileRuntime(Context context) {
         if (context == null) {
             return;
         }
@@ -251,7 +254,7 @@ public final class WebClipboardTileController {
             }
             requestTileRefresh(appContext);
         } catch (Throwable throwable) {
-            Log.w(TAG, "Failed to reconcile Web Clipboard after package replace", throwable);
+            Log.w(TAG, "Failed to reconcile Web Clipboard runtime", throwable);
         }
     }
 

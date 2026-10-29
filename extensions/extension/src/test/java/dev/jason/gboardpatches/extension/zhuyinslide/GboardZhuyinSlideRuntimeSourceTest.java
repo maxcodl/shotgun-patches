@@ -11,28 +11,30 @@ import org.junit.Test;
 
 public final class GboardZhuyinSlideRuntimeSourceTest {
     @Test
-    public void reflectionSupportUsesOnlyTheExact1777ActionAndPointerContract()
+    public void reflectionSupportUsesOnlyTheExact1853ActionAndPointerContract()
             throws Exception {
         String source = readSource("GboardZhuyinSlideRuntimeSupport.java");
 
-        assertTrue(source.contains("ACTION_SET_CLASS = \"owd\""));
-        assertTrue(source.contains("ACTION_TYPE_CLASS = \"oth\""));
-        assertTrue(source.contains("ACTION_DEF_CLASS = \"otk\""));
-        assertTrue(source.contains("ACTION_ENTRY_CLASS = \"oud\""));
-        assertTrue(source.contains("ACTION_BUILDER_CLASS = \"oti\""));
-        assertTrue(source.contains("METADATA_BUILDER_CLASS = \"ovv\""));
-        assertTrue(source.contains("INTENTION_CLASS = \"ouc\""));
-        assertTrue(source.contains("POINTER_TRACKER_CLASS = \"pbl\""));
-        assertTrue(source.contains("getDeclaredMethod(\"q\", actionSetClass, long.class)"));
-        assertTrue(source.contains("actionSetClass.getDeclaredField(\"f\")"));
-        assertTrue(source.contains("actionSetClass.getDeclaredField(\"g\")"));
+        assertTrue(source.contains("com.google.android.libraries.inputmethod.metadata.SoftKeyDef"));
+        assertTrue(source.contains("ACTION_TYPE_CLASS = \"qae\""));
+        assertTrue(source.contains("com.google.android.libraries.inputmethod.metadata.ActionDef"));
+        assertTrue(source.contains("ACTION_ENTRY_CLASS = \"qbc\""));
+        assertTrue(source.contains("ACTION_BUILDER_CLASS = \"qaf\""));
+        assertTrue(source.contains("METADATA_BUILDER_CLASS = \"qcv\""));
+        assertTrue(source.contains("INTENTION_CLASS = \"qbb\""));
+        assertTrue(source.contains("POINTER_TRACKER_CLASS = \"qin\""));
+        assertTrue(source.contains("getDeclaredMethod(\"s\", actionSetClass, long.class)"));
         assertTrue(source.contains("actionSetClass.getDeclaredField(\"h\")"));
+        assertTrue(source.contains("actionSetClass.getDeclaredField(\"i\")"));
+        assertTrue(source.contains("actionSetClass.getDeclaredField(\"h\")"));
+        assertTrue(source.contains("actionSetClass.getDeclaredMethod(\"g\", actionTypeClass)"));
         assertTrue(source.contains("actionSetClass.getDeclaredMethod(\"h\", actionTypeClass)"));
-        assertTrue(source.contains("actionSetClass.getDeclaredMethod(\"i\", actionTypeClass)"));
         assertTrue(source.contains("pointerTrackerClass.getDeclaredField(\"m\")"));
         assertTrue(source.contains("pointerTrackerClass.getDeclaredMethod(\"i\")"));
         assertTrue(source.contains("pointerTrackerClass.getDeclaredMethod(")
                 && source.contains("\"h\", float.class, float.class, actionTypeClass"));
+        assertFalse(source.contains("ACTION_SET_CLASS = \"owd\""));
+        assertFalse(source.contains("POINTER_TRACKER_CLASS = \"pbl\""));
 
         for (String stale : new String[] {
                 "oaa", "nxi", "nxl", "nyf", "nxj", "nzv", "nye", "ofk", "ofi"

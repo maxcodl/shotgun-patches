@@ -1,6 +1,6 @@
 package dev.jason.gboardpatches.patches.gboard.registry
 
-import dev.jason.gboardpatches.patches.gboard.features.manualincognito.gboardManualIncognitoAccessPointPatch
+import dev.jason.gboardpatches.patches.gboard.shared.accesspoint.gboardAccessPointContributions1803Patch
 import dev.jason.gboardpatches.patches.gboard.features.manualincognito.gboardManualIncognitoFeatureMarkerPatch
 import dev.jason.gboardpatches.patches.gboard.features.manualincognito.gboardManualIncognitoLifecyclePatch
 import dev.jason.gboardpatches.patches.gboard.features.manualincognito.gboardManualIncognitoPolicyPatch
@@ -11,7 +11,7 @@ import org.junit.Test
 
 class GboardManualIncognitoPatchContractTest {
     @Test
-    fun publicPatchOwnsComplete1777PortAndKeepsSettingsMasterOffByDefault() {
+    fun publicPatchOwnsComplete1803PortAndKeepsSettingsMasterOffByDefault() {
         val patch = gboardManualIncognitoModePatch
         assertEquals("Incognito Mode Toggle", patch.name)
         assertEquals(
@@ -26,12 +26,12 @@ class GboardManualIncognitoPatchContractTest {
                 gboardManualIncognitoFeatureMarkerPatch,
                 gboardManualIncognitoLifecyclePatch,
                 gboardManualIncognitoPolicyPatch,
-                gboardManualIncognitoAccessPointPatch,
+                gboardAccessPointContributions1803Patch,
             ),
             patch.dependencies.toList(),
         )
         assertEquals(
-            "17.7.7.932364120-release-arm64-v8a",
+            "18.5.4.993608717-release-arm64-v8a",
             patch.compatibility!!.single().targets.single().version,
         )
     }

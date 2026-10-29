@@ -1,115 +1,61 @@
 package dev.jason.gboardpatches.patches.gboard.features.cursortrackpad
 
-import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
 import app.morphe.patcher.patch.bytecodePatch
-import app.morphe.patcher.util.proxy.mutableTypes.MutableMethod
-import com.android.tools.smali.dexlib2.iface.instruction.FiveRegisterInstruction
-import com.android.tools.smali.dexlib2.iface.instruction.OneRegisterInstruction
-import com.android.tools.smali.dexlib2.iface.instruction.ReferenceInstruction
-import com.android.tools.smali.dexlib2.iface.reference.MethodReference
-import dev.jason.gboardpatches.patches.gboard.shared.findMutableMethodOrThrow
+import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
+import app.morphe.patcher.util.proxy.mutableTypes.MutableMethod.Companion.toMutable
+import com.android.tools.smali.dexlib2.AccessFlags
+import com.android.tools.smali.dexlib2.immutable.ImmutableMethod
+import dev.jason.gboardpatches.patches.gboard.shared.GboardMethodTarget
+import dev.jason.gboardpatches.patches.gboard.shared.addHelperMethodIfMissing
 import dev.jason.gboardpatches.patches.gboard.shared.gboardPatchesExtensionCarrierPatch
-import dev.jason.gboardpatches.patches.gboard.shared.returnInstructionIndices
-import dev.jason.gboardpatches.patches.gboard.shared.runtimeabi.RuntimeAbiCatalog
+import dev.jason.gboardpatches.patches.gboard.shared.mutableClass
+import dev.jason.gboardpatches.patches.gboard.shared.isMethodReference
+import dev.jason.gboardpatches.patches.gboard.shared.isOpcode
 import dev.jason.gboardpatches.patches.gboard.shared.runtimeabi.RuntimeCallEmitter
 import dev.jason.gboardpatches.patches.gboard.shared.runtimeabi.RuntimeCallId
 import dev.jason.gboardpatches.patches.shared.Constants.COMPATIBILITY_GBOARD
 
 internal val gboardCursorTrackpadPreferencePatch = bytecodePatch(
-    description = "在 enable_scrub_move 字串與 resource Boolean preference read 後套用設定值",
+    description = "1853游標觸控板的字串與資源偏好讀取；保留原始參數和例外。",
 ) {
     compatibleWith(COMPATIBILITY_GBOARD)
     dependsOn(gboardPatchesExtensionCarrierPatch)
-
     execute {
-        findMutableMethodOrThrow(
-            classType = "Lpnp;",
-            name = "av",
-            returnType = "Z",
-            parameterTypes = listOf("Ljava/lang/String;", "Z", "Z"),
-        ).applyCursorTrackpadStringPreferenceOverride()
-        findMutableMethodOrThrow(
-            classType = "Lpnp;",
-            name = "at",
-            returnType = "Z",
-            parameterTypes = listOf("I"),
-        ).applyCursorTrackpadResourcePreferenceOverride()
-    }
-}
-
-internal fun MutableMethod.applyCursorTrackpadStringPreferenceOverride() {
-    injectCursorTrackpadPreferenceOverride(
-        runtimeCall = RuntimeCallId.CURSOR_TRACKPAD_RUNTIME_APPLY_OVERRIDDEN_PREFERENCE_VALUE,
-        parameterRegister = implementation!!.registerCount - 3,
-    )
-}
-
-internal fun MutableMethod.applyCursorTrackpadResourcePreferenceOverride() {
-    injectCursorTrackpadPreferenceOverride(
-        runtimeCall =
-            RuntimeCallId.CURSOR_TRACKPAD_RUNTIME_APPLY_OVERRIDDEN_RESOURCE_PREFERENCE_VALUE,
-        parameterRegister = implementation!!.registerCount - 1,
-    )
-}
-
-private fun MutableMethod.injectCursorTrackpadPreferenceOverride(
-    runtimeCall: RuntimeCallId,
-    parameterRegister: Int,
-) {
-    val abi = RuntimeAbiCatalog.abi(runtimeCall)
-    val instructions = implementation?.instructions
-        ?: error("No instructions available in $definingClass->$name")
-    val returnIndices = returnInstructionIndices().filter { index ->
-        instructions[index].opcode.name.normalized() == "RETURN"
-    }
-    check(returnIndices.isNotEmpty()) { "Missing RETURN in $definingClass->$name" }
-
-    val invokeIndices = instructions.indices.filter { index ->
-        val reference = (instructions[index] as? ReferenceInstruction)?.reference
-            as? MethodReference
-        reference?.toString() == abi.reference
-    }
-    if (invokeIndices.isNotEmpty()) {
-        check(invokeIndices.size == returnIndices.size) {
-            "Malformed partial cursor trackpad preference override in $definingClass->$name"
-        }
-        returnIndices.forEach { returnIndex ->
-            val resultRegister = (instructions[returnIndex] as? OneRegisterInstruction)?.registerA
-                ?: error("RETURN at $returnIndex does not expose registerA")
-            val invokeIndex = returnIndex - 2
-            val invoke = instructions.getOrNull(invokeIndex) as? FiveRegisterInstruction
-            val reference = (instructions.getOrNull(invokeIndex) as? ReferenceInstruction)
-                ?.reference as? MethodReference
-            val moveResult = instructions.getOrNull(returnIndex - 1)
-                as? OneRegisterInstruction
-            check(
-                invoke != null && reference?.toString() == abi.reference &&
-                    invoke.registerCount == 2 &&
-                    invoke.registerC == parameterRegister &&
-                    invoke.registerD == resultRegister &&
-                    moveResult?.opcode?.name?.normalized() == "MOVE_RESULT" &&
-                    moveResult.registerA == resultRegister
-            ) {
-                "Malformed cursor trackpad preference delegate in $definingClass->$name"
-            }
-        }
-        return
-    }
-
-    returnIndices.asReversed().forEach { returnIndex ->
-        val resultRegister = (instructions[returnIndex] as? OneRegisterInstruction)?.registerA
-            ?: error("RETURN at $returnIndex does not expose registerA")
-        addInstructions(
-            returnIndex,
-            """
-                ${RuntimeCallEmitter.invoke(
-                    runtimeCall,
-                    "v$parameterRegister, v$resultRegister",
-                )}
-                move-result v$resultRegister
-            """.trimIndent(),
+        val targets = listOf(
+            GboardMethodTarget("Lqvt;", "am", listOf("Ljava/lang/String;", "Z", "Z"), "Z"),
+            GboardMethodTarget("Lcht;", "x", listOf("I", "Z"), "Z"),
         )
+        val methods = targets.map { it.resolve(this) }
+        methods.forEach { check(it.accessFlags == (AccessFlags.PUBLIC.value or AccessFlags.FINAL.value)) }
+        methods.forEachIndexed { index, original ->
+            val owner = mutableClass(original.definingClass)
+            val helper = "morpheCursorStock${original.name}"
+            check(owner.methods.none { it.name == helper }) { "Duplicate cursor preference bridge" }
+            if (index == 1 && original.implementation!!.instructions.any {
+                    it.isMethodReference("Lcht;->morpheWritingToolsStockRead(IZ)Z") }) {
+                val returns = original.implementation!!.instructions.indices.filter { original.implementation!!.instructions[it].isOpcode("RETURN") }
+                check(returns.size == 1 && original.implementation!!.registerCount == 4)
+                original.addInstructions(returns.single(), """
+                    ${RuntimeCallEmitter.invoke(RuntimeCallId.CURSOR_TRACKPAD_RUNTIME_APPLY_RESOURCE_BOOLEAN_PREFERENCE, "p1, v0")}
+                    move-result v0
+                """)
+                return@forEachIndexed
+            }
+            val renamed = ImmutableMethod(original.definingClass, helper, original.parameters, "Z",
+                AccessFlags.PRIVATE.value or AccessFlags.FINAL.value, original.annotations,
+                original.hiddenApiRestrictions, original.implementation).toMutable()
+            check(owner.methods.remove(original) && owner.methods.add(renamed))
+            val registers = if (index == 0) "p0, p1, p2, p3" else "p0, p1, p2"
+            val call = if (index == 0) RuntimeCallId.CURSOR_TRACKPAD_RUNTIME_APPLY_BOOLEAN_PREFERENCE
+                else RuntimeCallId.CURSOR_TRACKPAD_RUNTIME_APPLY_RESOURCE_BOOLEAN_PREFERENCE
+            owner.addHelperMethodIfMissing(original.name, original.parameterTypes.map { it.toString() }, "Z", original.accessFlags,
+                original.parameterTypes.size + 2, """
+                    invoke-direct {$registers}, ${original.definingClass}->$helper${targets[index].descriptor}
+                    move-result v0
+                    ${RuntimeCallEmitter.invoke(call, "p1, v0")}
+                    move-result v0
+                    return v0
+                """)
+        }
     }
 }
-
-private fun String.normalized(): String = uppercase().replace('-', '_')

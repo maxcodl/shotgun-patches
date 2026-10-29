@@ -2,6 +2,8 @@ package dev.jason.gboardpatches.extension.flagsettings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
+import android.os.UserManager;
 
 import java.lang.reflect.Method;
 
@@ -14,8 +16,15 @@ public final class GboardFlagRuntimeContext {
     }
 
     public static SharedPreferences preferencesOrNull() {
-        Context context = resolveContext();
-        return context == null ? null : GboardPatchesSettings.preferences(context);
+        return preferencesOrNull(resolveContext());
+    }
+
+    public static SharedPreferences preferencesOrNull(Context context) {
+        return GboardPatchesSettings.preferencesOrNull(context);
+    }
+
+    public static boolean isUserUnlocked(Context context) {
+        return GboardPatchesSettings.isUserUnlocked(context);
     }
 
     private static Context resolveContext() {

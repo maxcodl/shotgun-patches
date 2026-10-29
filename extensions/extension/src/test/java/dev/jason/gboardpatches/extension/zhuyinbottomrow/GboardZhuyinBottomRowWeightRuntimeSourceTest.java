@@ -9,23 +9,23 @@ import java.nio.file.Path;
 
 public final class GboardZhuyinBottomRowWeightRuntimeSourceTest {
     @Test
-    public void runtimeSupportUsesExact1777MetadataContractWithoutBaselineFallback()
+    public void runtimeSupportUsesExact1853MetadataContractWithoutBaselineFallback()
             throws Exception {
         String source = readRuntimeSupportSource();
 
         Assert.assertTrue(source.contains(
-                "private static final String ACTION_TYPE_CLASS = \"oth\";"));
+                "private static final String ACTION_TYPE_CLASS = \"qae\";"));
         Assert.assertTrue(source.contains(
-                "private static final String ACTION_SET_CLASS = \"owd\";"));
+                "\"com.google.android.libraries.inputmethod.metadata.SoftKeyDef\""));
         Assert.assertTrue(source.contains(
-                "private static final String ACTION_DEF_CLASS = \"otk\";"));
+                "\"com.google.android.libraries.inputmethod.metadata.ActionDef\""));
         Assert.assertTrue(source.contains(
-                "private static final String ACTION_DATA_CLASS = \"oud\";"));
+                "private static final String ACTION_DATA_CLASS = \"qbc\";"));
         Assert.assertTrue(source.contains("softKeyViewClass.getDeclaredField(\"e\")"));
-        Assert.assertTrue(source.contains("actionSetClass.getDeclaredField(\"g\")"));
+        Assert.assertTrue(source.contains("actionSetClass.getDeclaredField(\"i\")"));
         Assert.assertTrue(source.contains(
-                "actionSetClass.getDeclaredMethod(\"h\", actionTypeClass)"));
-        Assert.assertTrue(source.contains("actionDefClass.getDeclaredField(\"d\")"));
+                "actionSetClass.getDeclaredMethod(\"g\", actionTypeClass)"));
+        Assert.assertTrue(source.contains("actionDefClass.getDeclaredField(\"f\")"));
         Assert.assertTrue(source.contains("actionDataClass.getDeclaredField(\"e\")"));
         Assert.assertFalse(source.contains("\"nxi\""));
         Assert.assertFalse(source.contains("\"oaa\""));
@@ -33,6 +33,8 @@ public final class GboardZhuyinBottomRowWeightRuntimeSourceTest {
         Assert.assertFalse(source.contains("\"nyf\""));
         Assert.assertFalse(source.contains("getDeclaredField(\"n\")"));
         Assert.assertFalse(source.contains("getDeclaredMethod(\"a\", actionTypeClass)"));
+        Assert.assertFalse(source.contains("= \"owd\""));
+        Assert.assertFalse(source.contains("= \"oth\""));
     }
 
     @Test

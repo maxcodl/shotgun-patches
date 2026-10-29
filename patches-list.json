@@ -1,5 +1,5 @@
 {
-  "version": "2.11.0",
+  "version": "4.0.0-dev.12",
   "patches": [
     {
       "name": "AI Writing Tools",
@@ -8,7 +8,33 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
+        ]
+      },
+      "options": []
+    },
+    {
+      "name": "AMOLED Monet Keys",
+      "description": "在 AMOLED 純黑背景上保留 Monet 色調的按鍵，可在設定中調整色調強度。\nKeep Monet-tinted keys on the AMOLED black background, with an adjustable tint strength in settings.",
+      "use": false,
+      "dependencies": [
+        "AMOLED Pure Black Theme"
+      ],
+      "compatiblePackages": {
+        "com.google.android.inputmethod.latin": [
+          "18.5.4.993608717-release-arm64-v8a"
+        ]
+      },
+      "options": []
+    },
+    {
+      "name": "AMOLED Pure Black Theme",
+      "description": "在深色模式下將背景與表面顏色覆寫為純黑 (#000000)，並保留強調色彩。\nOverride surfaces and backgrounds with pure black (#000000) in dark mode while keeping accent colors.",
+      "use": true,
+      "dependencies": [],
+      "compatiblePackages": {
+        "com.google.android.inputmethod.latin": [
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -20,7 +46,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -32,7 +58,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -44,7 +70,19 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
+        ]
+      },
+      "options": []
+    },
+    {
+      "name": "Backup & Restore",
+      "description": "匯出或還原全部 Patches 設定，並備份、比較及還原 Gboard PB/XML flag store\nExport or restore all Patches settings, and back up, compare, or restore the Gboard PB/XML flag store.",
+      "use": true,
+      "dependencies": [],
+      "compatiblePackages": {
+        "com.google.android.inputmethod.latin": [
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -56,7 +94,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -68,7 +106,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -80,7 +118,19 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
+        ]
+      },
+      "options": []
+    },
+    {
+      "name": "Close Proactive Suggestions",
+      "description": "在主動建議列顯示關閉按鈕\nShow a dismiss button in the proactive suggestions bar.",
+      "use": true,
+      "dependencies": [],
+      "compatiblePackages": {
+        "com.google.android.inputmethod.latin": [
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -92,7 +142,19 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
+        ]
+      },
+      "options": []
+    },
+    {
+      "name": "Custom Theme",
+      "description": "支援匯入自訂 ZIP 主題，並支援從 Rboard 官方儲存庫匯入精美主題。\nImport custom ZIP themes and beautiful themes from the official Rboard repository.",
+      "use": true,
+      "dependencies": [],
+      "compatiblePackages": {
+        "com.google.android.inputmethod.latin": [
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -104,7 +166,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -116,7 +178,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -128,7 +190,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -140,7 +202,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -152,7 +214,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -164,7 +226,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -176,7 +238,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -188,7 +250,43 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
+        ]
+      },
+      "options": []
+    },
+    {
+      "name": "FTP Server",
+      "description": "新增區域網路 FTP 伺服器，支援檔案瀏覽、傳輸與下載續傳\nAdd a LAN FTP server with file browsing, transfers, and download resume.",
+      "use": true,
+      "dependencies": [],
+      "compatiblePackages": {
+        "com.google.android.inputmethod.latin": [
+          "18.5.4.993608717-release-arm64-v8a"
+        ]
+      },
+      "options": []
+    },
+    {
+      "name": "Floating Web Search",
+      "description": "直接從 Gboard 開啟懸浮網頁，快速搜尋需要的資訊。\nOpen a floating web page directly from Gboard to quickly search for the information you need.",
+      "use": true,
+      "dependencies": [],
+      "compatiblePackages": {
+        "com.google.android.inputmethod.latin": [
+          "18.5.4.993608717-release-arm64-v8a"
+        ]
+      },
+      "options": []
+    },
+    {
+      "name": "Frosted Glass",
+      "description": "為鍵盤加入即時背景模糊與自訂主題透明度。\nAdd live background blur and custom-theme opacity to the keyboard.",
+      "use": true,
+      "dependencies": [],
+      "compatiblePackages": {
+        "com.google.android.inputmethod.latin": [
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -200,7 +298,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -212,7 +310,19 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
+        ]
+      },
+      "options": []
+    },
+    {
+      "name": "Hyperspeed Typing Animation",
+      "description": "持續快速輸入時顯示動畫，並支援所有鍵盤\nShow the animation during sustained fast typing with support for all keyboards.",
+      "use": true,
+      "dependencies": [],
+      "compatiblePackages": {
+        "com.google.android.inputmethod.latin": [
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -224,7 +334,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -236,7 +346,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -248,7 +358,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -260,7 +370,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -272,19 +382,59 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
     },
     {
       "name": "Package Rename",
-      "description": "將套件名稱改成 dev.jason.com.google.android.inputmethod.latin 以便共存安裝\nRename the package to dev.jason.com.google.android.inputmethod.latin so it can be installed alongside the official Gboard.",
+      "description": "將套件名稱改成 dev.jason.com.google.android.inputmethod.latin，並可自訂 App 名稱，以便共存安裝\nRename the package to dev.jason.com.google.android.inputmethod.latin and allow a custom app name so it can be installed alongside the official Gboard.",
       "use": true,
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
+        ]
+      },
+      "options": [
+        {
+          "key": "app_display_name",
+          "title": "App 名稱 / App name",
+          "description": "",
+          "required": true,
+          "type": "kotlin.String",
+          "default": "Shotgun",
+          "values": {
+            "Gboard": "Gboard",
+            "Gboard Dev": "Gboard Dev",
+            "Gboard Patches": "Gboard Patches",
+            "Gboard Mod": "Gboard Mod",
+            "Shotgun": "Shotgun"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Quick Insert",
+      "description": "啟用快速插入面板與工具列入口\nEnable the Quick Insert panel and toolbar access point.",
+      "use": true,
+      "dependencies": [],
+      "compatiblePackages": {
+        "com.google.android.inputmethod.latin": [
+          "18.5.4.993608717-release-arm64-v8a"
+        ]
+      },
+      "options": []
+    },
+    {
+      "name": "Rounded Keyboard Panel",
+      "description": "自訂鍵盤面板哪些角落呈現圓角，並分別設定上方與下方半徑。\nCustomize which corners of the keyboard panel are rounded, and set the top and bottom radii separately.",
+      "use": true,
+      "dependencies": [],
+      "compatiblePackages": {
+        "com.google.android.inputmethod.latin": [
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -296,7 +446,43 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
+        ]
+      },
+      "options": []
+    },
+    {
+      "name": "Shotgun Keyboard",
+      "description": "擊鍵時播放散彈槍開火音效，空白鍵/換行鍵播放上膛音效，支援耳機與外接裝置自動靜音\nPlay shotgun blast sound on keystrokes, pump sound on Space / Enter, and auto-mute with headphones/external audio.",
+      "use": true,
+      "dependencies": [],
+      "compatiblePackages": {
+        "com.google.android.inputmethod.latin": [
+          "18.5.4.993608717-release-arm64-v8a"
+        ]
+      },
+      "options": []
+    },
+    {
+      "name": "Simple Calculator",
+      "description": "直接輸入算式，在 Gboard 推薦列顯示可捲動算式與答案。\nType an expression and show a scrollable equation plus its answer in Gboard's suggestion row.",
+      "use": true,
+      "dependencies": [],
+      "compatiblePackages": {
+        "com.google.android.inputmethod.latin": [
+          "18.5.4.993608717-release-arm64-v8a"
+        ]
+      },
+      "options": []
+    },
+    {
+      "name": "Swipe Down to Dismiss Keyboard",
+      "description": "從建議列或工具列向下滑動以關閉鍵盤。\nSwipe down from the suggestions or toolbar to close the keyboard.",
+      "use": true,
+      "dependencies": [],
+      "compatiblePackages": {
+        "com.google.android.inputmethod.latin": [
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -308,7 +494,31 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
+        ]
+      },
+      "options": []
+    },
+    {
+      "name": "Toolbar Editing Buttons",
+      "description": "將全選、複製、剪下與貼上加入選單。\nAdd Select All, Copy, Cut and Paste to the menu.",
+      "use": true,
+      "dependencies": [],
+      "compatiblePackages": {
+        "com.google.android.inputmethod.latin": [
+          "18.5.4.993608717-release-arm64-v8a"
+        ]
+      },
+      "options": []
+    },
+    {
+      "name": "Top Toolbar Item Count",
+      "description": "自訂 Gboard 頂端工具列項目數量\nCustomize the Gboard top toolbar item count.",
+      "use": true,
+      "dependencies": [],
+      "compatiblePackages": {
+        "com.google.android.inputmethod.latin": [
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -320,7 +530,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -332,7 +542,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -344,7 +554,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -358,7 +568,7 @@
       ],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []
@@ -370,7 +580,7 @@
       "dependencies": [],
       "compatiblePackages": {
         "com.google.android.inputmethod.latin": [
-          "17.7.7.932364120-release-arm64-v8a"
+          "18.5.4.993608717-release-arm64-v8a"
         ]
       },
       "options": []

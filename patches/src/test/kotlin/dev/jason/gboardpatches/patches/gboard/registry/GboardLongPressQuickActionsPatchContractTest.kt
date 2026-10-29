@@ -1,8 +1,8 @@
 package dev.jason.gboardpatches.patches.gboard.registry
 
-import com.google.gson.JsonParser
 import dev.jason.gboardpatches.patches.gboard.features.longpressquickactions.gboardLongPressQuickActionsFeatureMarkerPatch
 import dev.jason.gboardpatches.patches.gboard.features.longpressquickactions.gboardLongPressQuickActionsInputEventPatch
+import dev.jason.gboardpatches.patches.gboard.features.longpressquickactions.gboardLongPressQuickActionsGesturePatch
 import dev.jason.gboardpatches.patches.gboard.features.longpressquickactions.gboardLongPressQuickActionsPointerOwnerPatch
 import dev.jason.gboardpatches.patches.gboard.features.longpressquickactions.gboardLongPressQuickActionsSoftKeyPatch
 import dev.jason.gboardpatches.patches.gboard.shared.gboardPatchesSettingsPatch
@@ -16,7 +16,7 @@ import org.junit.Test
 
 class GboardLongPressQuickActionsPatchContractTest {
     @Test
-    fun publicPatchIsIndependentAndExact1777Only() {
+    fun publicPatchIsIndependentAndExact1803Only() {
         val patch = gboardLongPressQuickActionsPatch
         assertEquals("Long-Press Editing Shortcuts", patch.name)
         assertEquals(LONG_PRESS_DESCRIPTION, patch.description)
@@ -29,6 +29,7 @@ class GboardLongPressQuickActionsPatchContractTest {
                 gboardLongPressQuickActionsSoftKeyPatch,
                 gboardLongPressQuickActionsInputEventPatch,
                 gboardLongPressQuickActionsPointerOwnerPatch,
+                gboardLongPressQuickActionsGesturePatch,
             ),
             patch.dependencies.toList(),
         )
@@ -37,18 +38,14 @@ class GboardLongPressQuickActionsPatchContractTest {
         })
 
         assertEquals(
-            "17.7.7.932364120-release-arm64-v8a",
+            "18.5.4.993608717-release-arm64-v8a",
             patch.compatibility!!.single().targets.single().version,
         )
     }
 
     @Test
     fun generatedInventoryContainsExactlyOneLongPressShortcutsRow() {
-        val inventory = JsonParser.parseString(
-            Files.readString(repositoryRoot().resolve("patches-list.json"), StandardCharsets.UTF_8),
-        ).asJsonObject
-        val rows = inventory.getAsJsonArray("patches")
-            .map { it.asJsonObject }
+        val rows = generatedPublishedPatches()
             .filter { it.get("name").asString == "Long-Press Editing Shortcuts" }
 
         assertEquals(1, rows.size)
@@ -57,7 +54,7 @@ class GboardLongPressQuickActionsPatchContractTest {
         assertTrue(row.get("use").asBoolean)
         assertEquals(0, row.getAsJsonArray("options").size())
         assertEquals(
-            listOf("17.7.7.932364120-release-arm64-v8a"),
+            listOf("18.5.4.993608717-release-arm64-v8a"),
             row.getAsJsonObject("compatiblePackages")
                 .getAsJsonArray("com.google.android.inputmethod.latin")
                 .map { it.asString },
@@ -67,7 +64,7 @@ class GboardLongPressQuickActionsPatchContractTest {
     private fun repositoryRoot(): Path {
         val workingDirectory = Path.of("").toAbsolutePath().normalize()
         return generateSequence(workingDirectory) { it.parent }
-            .firstOrNull { Files.isRegularFile(it.resolve("patches-list.json")) }
+            .firstOrNull { Files.isRegularFile(it.resolve("settings.gradle.kts")) }
             ?: error("Could not locate repository root from $workingDirectory")
     }
 

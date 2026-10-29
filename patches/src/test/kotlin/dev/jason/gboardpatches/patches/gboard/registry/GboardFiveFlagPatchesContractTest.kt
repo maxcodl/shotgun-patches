@@ -4,6 +4,7 @@ import dev.jason.gboardpatches.patches.gboard.features.accessibilitylayout.gboar
 import dev.jason.gboardpatches.patches.gboard.features.accessibilitylayout.gboardAccessibilityLayoutFlagValuePatch
 import dev.jason.gboardpatches.patches.gboard.features.accesspointsmenu.gboardAccessPointsMenuFeatureMarkerPatch
 import dev.jason.gboardpatches.patches.gboard.features.accesspointsmenu.gboardAccessPointsMenuFlagValuePatch
+import dev.jason.gboardpatches.patches.gboard.features.accesspointsmenu.gboardAccessPointsMenu1853Patch
 import dev.jason.gboardpatches.patches.gboard.features.cursortrackpad.gboardCursorTrackpadFeatureMarkerPatch
 import dev.jason.gboardpatches.patches.gboard.features.cursortrackpad.gboardCursorTrackpadFlagValuePatch
 import dev.jason.gboardpatches.patches.gboard.features.cursortrackpad.gboardCursorTrackpadPreferencePatch
@@ -21,7 +22,7 @@ import org.junit.Test
 
 class GboardFiveFlagPatchesContractTest {
     @Test
-    fun fivePublicPatchesRemainIndependentAndExact1777Only() {
+    fun fivePublicPatchesRemainIndependentAndExact1853Only() {
         val expectedDependencies = mapOf(
             gboardEmojiSizePatch to listOf(
                 gboardPatchesSettingsPatch,
@@ -38,6 +39,7 @@ class GboardFiveFlagPatchesContractTest {
                 gboardPatchesSettingsPatch,
                 gboardAccessPointsMenuFeatureMarkerPatch,
                 gboardAccessPointsMenuFlagValuePatch,
+                gboardAccessPointsMenu1853Patch,
             ),
             gboardSplitKeyboardPatch to listOf(
                 gboardPatchesSettingsPatch,
@@ -66,7 +68,7 @@ class GboardFiveFlagPatchesContractTest {
             assertTrue(patch.default)
             assertEquals(dependencies, patch.dependencies.toList())
             assertEquals(
-                "17.7.7.932364120-release-arm64-v8a",
+                "18.5.4.993608717-release-arm64-v8a",
                 patch.compatibility!!.single().targets.single().version,
             )
         }

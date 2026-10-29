@@ -19,26 +19,26 @@ import dev.jason.gboardpatches.patches.gboard.shared.runtimeabi.RuntimeCallId
 import dev.jason.gboardpatches.patches.shared.Constants.COMPATIBILITY_GBOARD
 
 internal val gboardManualIncognitoPolicyPatch = bytecodePatch(
-    description = "在 17.7.7 clipboard 與 voice incognito gate 加入 scoped value delegate。",
+    description = "在 18.5.4 clipboard 與 voice incognito gate 加入 scoped value delegate。",
 ) {
     compatibleWith(COMPATIBILITY_GBOARD)
     dependsOn(gboardPatchesExtensionCarrierPatch)
 
     execute {
-        findMutableMethodOrThrow(GboardManualIncognito1777Targets.clipboardListener)
+        findMutableMethodOrThrow(GboardManualIncognitoTargets.clipboardListener)
             .applyManualIncognitoAfterBooleanCall(
-                owner = "Locw;",
+                owner = "Lpjs;",
                 name = "f",
                 call = RuntimeCallId.MANUAL_INCOGNITO_RUNTIME_APPLY_CLIPBOARD_POLICY,
             )
-        findMutableMethodOrThrow(GboardManualIncognito1777Targets.voiceEligibility)
+        findMutableMethodOrThrow(GboardManualIncognitoTargets.voiceEligibility)
             .applyManualIncognitoBooleanParameterDelegate(
                 RuntimeCallId.MANUAL_INCOGNITO_RUNTIME_APPLY_VOICE_POLICY,
                 parameterRegister = "p2",
             )
-        findMutableMethodOrThrow(GboardManualIncognito1777Targets.dictationEligibility)
+        findMutableMethodOrThrow(GboardManualIncognitoTargets.dictationEligibility)
             .applyManualIncognitoAfterBooleanFieldRead(
-                fieldReference = "Ledx;->v:Z",
+                fieldReference = "Leta;->v:Z",
                 call = RuntimeCallId.MANUAL_INCOGNITO_RUNTIME_APPLY_DICTATION_FLAG,
             )
     }
@@ -57,14 +57,25 @@ internal fun MutableMethod.applyManualIncognitoAfterBooleanCall(
         check(existing == 1) { "Duplicate manual incognito clipboard delegates" }
         return
     }
-    val invokeIndex = instructions.indices.singleOrNull { index ->
+    val exactInvokeIndices = instructions.indices.filter { index ->
         val reference = (instructions[index] as? ReferenceInstruction)
             ?.reference as? MethodReference
         reference?.definingClass == owner &&
             reference.name == name &&
             reference.parameterTypes.isEmpty() &&
             reference.returnType == "Z"
-    } ?: error("Could not find exact $owner->$name()Z call in $definingClass->${this.name}")
+    }
+    val invokeIndex = when {
+        exactInvokeIndices.size == 1 -> exactInvokeIndices.single()
+        exactInvokeIndices.size > 1 -> error("Found multiple exact $owner->$name()Z calls in $definingClass->${this.name}")
+        else -> instructions.indices.singleOrNull { index ->
+            val reference = (instructions[index] as? ReferenceInstruction)
+                ?.reference as? MethodReference
+            reference?.name == name &&
+                reference.parameterTypes.isEmpty() &&
+                reference.returnType == "Z"
+        } ?: error("Could not find unique $name()Z call in $definingClass->${this.name}")
+    }
     val moveResultIndex = invokeIndex + 1
     val register = (instructions.getOrNull(moveResultIndex) as? OneRegisterInstruction)
         ?.registerA

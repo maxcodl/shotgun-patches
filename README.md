@@ -1,14 +1,14 @@
-<h1 align="center">Gboard Patches</h1>
+<h1 align="center">Shotgun Patches</h1>
 
 <p align="center">
   Morphe patches for Gboard with a mix of global improvements and Taiwan-focused enhancements.
 </p>
 
 <p align="center">
-  <a href="https://github.com/jasonwu1994/Gboard-patches/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/jasonwu1994/Gboard-patches?display_name=tag&label=Release&style=for-the-badge"></a>
-  <a href="https://github.com/jasonwu1994/Gboard-patches"><img alt="Total downloads" src="https://img.shields.io/github/downloads/jasonwu1994/Gboard-patches/total?label=Downloads&style=for-the-badge"></a>
-  <a href="https://morphe.software/add-source?github=jasonwu1994/Gboard-patches"><img alt="Add to Morphe" src="https://img.shields.io/badge/Morphe-Add%20Source-00A8FF?style=for-the-badge"></a>
-  <a href="https://github.com/jasonwu1994/Gboard-patches"><img alt="GitHub stars" src="https://img.shields.io/github/stars/jasonwu1994/Gboard-patches?style=social"></a>
+  <a href="https://github.com/Burhanverse/shotgun-patches/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/Burhanverse/shotgun-patches?display_name=tag&label=Release&style=for-the-badge"></a>
+  <a href="https://github.com/Burhanverse/shotgun-patches"><img alt="Total downloads" src="https://img.shields.io/github/downloads/Burhanverse/shotgun-patches/total?label=Downloads&style=for-the-badge"></a>
+  <a href="https://morphe.software/add-source?github=Burhanverse/shotgun-patches"><img alt="Add to Morphe" src="https://img.shields.io/badge/Morphe-Add%20Source-00A8FF?style=for-the-badge"></a>
+  <a href="https://github.com/Burhanverse/shotgun-patches"><img alt="GitHub stars" src="https://img.shields.io/github/stars/Burhanverse/shotgun-patches?style=social"></a>
 </p>
 
 <p align="center">
@@ -17,11 +17,140 @@
 
 ## Overview
 
-Gboard Patches is a public Morphe source for a curated set of Gboard enhancements, including both global usability improvements and Taiwan-focused features for local input habits and day-to-day use.
+Shotgun Patches is a public Morphe source for a curated set of Gboard enhancements, including both global usability improvements and Taiwan-focused features for local input habits and day-to-day use.
 
 ## Included Patches
 
-### Global Users
+### Project-Built Features
+
+Features designed and built by this project rather than simply unlocking an existing Gboard flag.
+
+<details>
+  <summary><code>Clipboard Enhancements</code></summary>
+
+  Lets you enhance clipboard retention time, item count limits, preview lines, countdown and creation-time labels, order index, grid columns, and optionally render only the first 1,000 characters on each clipboard card.
+</details>
+
+<details>
+  <summary><code>Web Clipboard</code></summary>
+
+  Hosts a phone-powered Web Clipboard portal that lets desktop browsers sync with Gboard over the same LAN, with a pairing code gate and an optional Quick Settings Tile.
+
+  Preview:
+
+  <img alt="Web Clipboard pairing gate" src="assets/features/web-clipboard/01-pairing-gate.png" width="720">
+
+  <img alt="Web Clipboard conversation view" src="assets/features/web-clipboard/02-conversation-view.png" width="720">
+
+</details>
+
+<details>
+  <summary><code>Floating Web Search</code></summary>
+
+  Open a floating web page directly from Gboard to quickly search for the information you need.
+</details>
+
+<details>
+  <summary><code>Custom Theme</code></summary>
+
+Import custom ZIP themes and beautiful themes from the official Rboard repository.
+</details>
+
+<details>
+  <summary><code>Frosted Glass</code></summary>
+
+  Adds live background blur and custom-theme transparency to the keyboard. Available on Android 12+ devices that support cross-window blur, with custom themes such as Animal Black.
+</details>
+
+<details>
+  <summary><code>FTP Server</code></summary>
+
+  Hosts an FTP server on your phone so desktop FTP clients can browse, upload, download, and resume file transfers over the same LAN. It supports anonymous or password-protected access, a configurable control and passive port range, read-only mode, <code>/sdcard</code> or a user-selected folder as the root, live transfer progress, retained partial uploads, and an optional Quick Settings Tile.
+</details>
+
+<details>
+  <summary><code>Long-Press Editing Shortcuts</code></summary>
+
+  Add Select all, Undo, Copy, Cut, Paste, and Redo long-press shortcuts to English QWERTY and Zhuyin, with an optional globe-key drag gesture that follows the same physical key positions across supported alphabet layouts.
+</details>
+
+<details>
+  <summary><code>Toolbar Editing Buttons</code></summary>
+
+  Add Select All, Copy, Cut and Paste to the menu. Drag them to the top toolbar and
+  use them with different keyboard languages in supported editors.
+</details>
+
+<details>
+  <summary><code>Swipeable Custom Top Row</code></summary>
+
+  Lets you swipe the keyboard top row horizontally to open customizable text and JavaScript slots.
+</details>
+
+<details>
+  <summary><code>Shotgun Keyboard</code></summary>
+
+  Plays realistic low-latency shotgun blast audio effects on typing keystrokes, and pump/cocking sounds on Spacebar, Enter, Backspace, or other customizable keys with volume slider controls and automatic headphone/external audio muting.
+</details>
+
+<details>
+  <summary><code>Incognito Mode Toggle</code></summary>
+
+  Add an Incognito toggle to the Access Point toolbar and configure clipboard and voice typing availability while Incognito mode is active.
+</details>
+
+<details>
+  <summary><code>Custom Symbols</code></summary>
+
+  Adds a dedicated symbols tab and a quick access entry from the comma long-press popup.
+</details>
+
+<details>
+  <summary><code>Simple Calculator</code></summary>
+
+  Adds an optional inline calculator for arithmetic expressions typed in any text field. The result appears in Gboard's suggestion row; tap it to replace the expression, or long-press it to copy the result.
+</details>
+
+<details>
+  <summary><code>Swipe Down to Dismiss Keyboard</code></summary>
+
+  Swipe down from the suggestions or toolbar to close the keyboard.
+</details>
+
+<details>
+  <summary><code>G Logo on Spacebar</code></summary>
+
+  Show the G Logo on the spacebar and hide the language label.
+</details>
+
+<details>
+  <summary><code>Rounded Keyboard Panel</code></summary>
+
+  Customize which corners of the keyboard panel are rounded, and set the top and bottom radii separately.
+</details>
+
+<details>
+  <summary><code>Latin Globe Key Ignore Interval</code></summary>
+
+  Add an independent English globe key ignore interval override for post-typing language-switch delay.
+</details>
+
+<details>
+  <summary><code>Emojis, stickers & GIFs Tab Order</code></summary>
+
+Customize the bottom tab order in Gboard's Emojis, stickers & GIFs panel with drag-and-drop reordering.
+</details>
+
+<details>
+  <summary><code>Backup &amp; Restore</code></summary>
+
+  Exports all Gboard Patches settings to a portable JSON backup and restores only the modules you select, with per-module and per-key results. It also exports, compares, and restores Gboard's raw PB/XML flag-store files.
+</details>
+
+
+### Gboard Feature Unlocks
+
+Features already present in Gboard that are exposed by enabling hidden settings, rollout gates, or built-in behavior.
 
 <details>
   <summary><code>AI Writing Tools</code></summary>
@@ -36,64 +165,9 @@ Gboard Patches is a public Morphe source for a curated set of Gboard enhancement
 </details>
 
 <details>
-  <summary><code>Clipboard Enhancements</code></summary>
-
-  Lets you enhance clipboard retention time, item count limits, preview lines, countdown and creation-time labels, order index, grid columns, and optionally render only the first 1,000 characters on each clipboard card.
-</details>
-
-<details>
-  <summary><code>Clipboard Custom Character Limit</code></summary>
-
-  Lets you set the maximum number of characters stored for each text clipboard item, with Gboard's stock 20,000-character limit as the default.
-</details>
-
-<details>
-  <summary><code>Web Clipboard</code></summary>
-
-  Hosts a phone-powered Web Clipboard portal that lets desktop browsers sync with Gboard over the same LAN, with a pairing code gate and an optional Quick Settings Tile.
-
-  Preview:
-
-  <img alt="Web Clipboard pairing gate" src="docs/assets/features/web-clipboard/01-pairing-gate.png" width="720">
-
-  <img alt="Web Clipboard conversation view" src="docs/assets/features/web-clipboard/02-conversation-view.png" width="720">
-
-</details>
-
-<details>
-  <summary><code>Long-Press Editing Shortcuts</code></summary>
-
-  Add Select all, Undo, Copy, Cut, Paste, and Redo long-press shortcuts to English QWERTY and Zhuyin.
-</details>
-
-<details>
-  <summary><code>Incognito Mode Toggle</code></summary>
-
-  Add an Incognito toggle to the Access Point toolbar and configure clipboard and voice typing availability while Incognito mode is active.
-</details>
-
-<details>
   <summary><code>Enable OCR / Scan Text</code></summary>
 
   Enable the OCR / Scan Text feature with Latin, Chinese, Japanese, Korean, and Devanagari recognition backends.
-</details>
-
-<details>
-  <summary><code>Custom Symbols</code></summary>
-
-  Adds a dedicated symbols tab and a quick access entry from the comma long-press popup.
-</details>
-
-<details>
-  <summary><code>Swipeable Custom Top Row</code></summary>
-
-  Lets you swipe the keyboard top row horizontally to open customizable text and JavaScript slots.
-</details>
-
-<details>
-  <summary><code>Emojis, stickers & GIFs Tab Order</code></summary>
-
-Customize the bottom tab order in Gboard's Emojis, stickers & GIFs panel with drag-and-drop reordering.
 </details>
 
 <details>
@@ -127,12 +201,6 @@ Customize the bottom tab order in Gboard's Emojis, stickers & GIFs panel with dr
 </details>
 
 <details>
-  <summary><code>Latin Globe Key Ignore Interval</code></summary>
-
-  Add an independent English globe key ignore interval override for post-typing language-switch delay.
-</details>
-
-<details>
   <summary><code>Use Bluetooth Microphone</code></summary>
 
   Enables the <code>Voice typing &gt; Use Bluetooth microphone</code> setting and its related rollout gate.
@@ -151,18 +219,6 @@ Customize the bottom tab order in Gboard's Emojis, stickers & GIFs panel with dr
 </details>
 
 <details>
-  <summary><code>G Logo on Spacebar</code></summary>
-
-  Show the G Logo on the spacebar and hide the language label.
-</details>
-
-<details>
-  <summary><code>Access Points menu style</code></summary>
-
-  Lets you switch between the new and legacy Access Points menu styles.
-</details>
-
-<details>
   <summary><code>Enable split keyboard</code></summary>
 
   Enables Gboard's split keyboard layout.
@@ -172,6 +228,42 @@ Customize the bottom tab order in Gboard's Emojis, stickers & GIFs panel with dr
   <summary><code>Enable accessibility layout</code></summary>
 
   Enables accessibility layout.
+</details>
+
+<details>
+  <summary><code>Quick Insert</code></summary>
+
+Enables the Quick Insert panel and toolbar access point.
+</details>
+
+<details>
+  <summary><code>Hyperspeed Typing Animation</code></summary>
+
+Shows the animation during sustained fast typing with support for all keyboards.
+</details>
+
+<details>
+  <summary><code>Close Proactive Suggestions</code></summary>
+
+Shows a dismiss button in the proactive suggestions bar.
+</details>
+
+<details>
+  <summary><code>Clipboard Custom Character Limit</code></summary>
+
+  Lets you set the maximum number of characters stored for each text clipboard item, with Gboard's stock 20,000-character limit as the default.
+</details>
+
+<details>
+  <summary><code>Access Points menu style</code></summary>
+
+  Lets you switch between the new and legacy Access Points menu styles.
+</details>
+
+<details>
+  <summary><code>Top Toolbar Item Count</code></summary>
+
+  Lets you customize the top toolbar item count.
 </details>
 
 <details>
@@ -192,7 +284,9 @@ Customize the bottom tab order in Gboard's Emojis, stickers & GIFs panel with dr
   Renames the patched package so it can be installed alongside the official Gboard app.
 </details>
 
-### Taiwan Users
+### Taiwan-focused Features
+
+Features tailored to Traditional Chinese and Zhuyin input workflows.
 
 <details>
   <summary><code>Zhuyin Slide Input</code></summary>
@@ -216,8 +310,8 @@ Customize the bottom tab order in Gboard's Emojis, stickers & GIFs panel with dr
 
 Add this repository as a Morphe source:
 
-- [Open in Morphe](https://morphe.software/add-source?github=jasonwu1994/Gboard-patches)
-- Or manually add `https://github.com/jasonwu1994/Gboard-patches`
+- [Open in Morphe](https://morphe.software/add-source?github=Burhanverse/shotgun-patches)
+- Or manually add `https://github.com/Burhanverse/shotgun-patches`
 
 ## Build
 

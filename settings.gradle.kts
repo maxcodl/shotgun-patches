@@ -1,4 +1,11 @@
-rootProject.name = "gboard-patches"
+rootProject.name = "shotgun-patches"
+
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
 
 pluginManagement {
     repositories {

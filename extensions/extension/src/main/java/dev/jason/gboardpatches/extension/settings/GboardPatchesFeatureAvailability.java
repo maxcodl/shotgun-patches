@@ -7,12 +7,16 @@ import android.os.Bundle;
 import android.util.Log;
 
 public final class GboardPatchesFeatureAvailability {
+    public static final String FEATURE_EDITING_ACCESS_POINTS =
+            "dev.jason.gboardpatches.feature.editing_access_points";
     public static final String FEATURE_CLIPBOARD_ENHANCEMENTS =
             "dev.jason.gboardpatches.feature.clipboard_enhancements";
     public static final String FEATURE_CLIPBOARD_CONTENT_LIMIT =
             "dev.jason.gboardpatches.feature.clipboard_content_limit";
     public static final String FEATURE_WEB_CLIPBOARD =
             "dev.jason.gboardpatches.feature.web_clipboard";
+    public static final String FEATURE_LAN_FTP =
+            "dev.jason.gboardpatches.feature.lan_ftp_server";
     public static final String FEATURE_DEVICE_INTELLIGENCE =
             "dev.jason.gboardpatches.feature.device_intelligence";
     public static final String FEATURE_GRAMMAR_CHECKER =
@@ -39,6 +43,8 @@ public final class GboardPatchesFeatureAvailability {
             "dev.jason.gboardpatches.feature.top_row_swipe";
     public static final String FEATURE_DEVELOPER_OPTIONS =
             "dev.jason.gboardpatches.feature.developer_options";
+    public static final String FEATURE_BACKUP_RESTORE =
+            "dev.jason.gboardpatches.feature.backup_restore";
     public static final String FEATURE_LONG_PRESS_QUICK_ACTIONS =
             "dev.jason.gboardpatches.feature.long_press_quick_actions";
     public static final String FEATURE_ADVANCED_VOICE_TYPING =
@@ -59,8 +65,34 @@ public final class GboardPatchesFeatureAvailability {
             "dev.jason.gboardpatches.feature.split_keyboard";
     public static final String FEATURE_ACCESSIBILITY_LAYOUT =
             "dev.jason.gboardpatches.feature.accessibility_layout";
+    public static final String FEATURE_ROUNDED_KEYBOARD_PANEL =
+            "dev.jason.gboardpatches.feature.rounded_keyboard_panel";
     public static final String FEATURE_SPACEBAR_LOGO =
             "dev.jason.gboardpatches.feature.spacebar_logo";
+    public static final String FEATURE_SHOTGUN_KEYBOARD =
+            "dev.jason.gboardpatches.feature.shotgun_keyboard";
+    public static final String FEATURE_CLOSE_PROACTIVE_SUGGESTIONS =
+            "dev.jason.gboardpatches.feature.close_proactive_suggestions";
+    public static final String FEATURE_FLOW_MODE_ANIMATION =
+            "dev.jason.gboardpatches.feature.flow_mode_animation";
+    public static final String FEATURE_QUICK_INSERT =
+            "dev.jason.gboardpatches.feature.quick_insert";
+    public static final String FEATURE_ACCESS_POINT_COUNT =
+            "dev.jason.gboardpatches.feature.access_point_count";
+    public static final String FEATURE_FLOATING_WEB_SEARCH =
+            "dev.jason.gboardpatches.feature.floating_web_search";
+    public static final String FEATURE_SIMPLE_CALCULATOR =
+            "dev.jason.gboardpatches.feature.simple_calculator";
+    public static final String FEATURE_AMOLED_THEME =
+            "dev.jason.gboardpatches.feature.amoled_theme";
+    public static final String FEATURE_AMOLED_MONET =
+            "dev.jason.gboardpatches.feature.amoled_monet";
+    public static final String FEATURE_CUSTOM_THEME =
+            "dev.jason.gboardpatches.feature.custom_theme";
+    public static final String FEATURE_FROSTED_GLASS =
+            "dev.jason.gboardpatches.feature.frosted_glass";
+    public static final String FEATURE_SWIPE_DISMISS =
+            "dev.jason.gboardpatches.feature.swipe_dismiss";
 
     private static final String TAG = "GboardPatches";
 
@@ -105,8 +137,12 @@ public final class GboardPatchesFeatureAvailability {
             }
             return false;
         } catch (Throwable throwable) {
-            Log.w(TAG, "Failed to resolve feature marker: " + describeFeatures(featureKeys),
-                    throwable);
+            try {
+                Log.w(TAG, "Failed to resolve feature marker: " + describeFeatures(featureKeys),
+                        throwable);
+            } catch (Throwable ignored) {
+                // Feature detection still fails closed when logging is unavailable.
+            }
             return false;
         }
     }

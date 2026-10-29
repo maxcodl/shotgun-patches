@@ -1,7 +1,7 @@
 {
-    "created_at":  "2026-08-15T02:19:53",
-    "description":  "### ✨ New Features\n\n* **Gboard:** nothing was added.\n\n### ✨ 新功能\n\n* **Gboard:** 什麼都沒有添加。",
-    "download_url":  "https://github.com/jasonwu1994/Gboard-patches/releases/download/v2.11.0/patches-2.11.0.mpp",
-    "signature_download_url":  "",
-    "version":  "2.11.0"
+  "created_at": "2026-10-29T10:47:00Z",
+  "description": "### 🔄 Fork Manifest & Source Identity (v4.0.0-dev.12)\n\n* **Manifest:** replace inherited Burhanverse source, author, contact, and website metadata with this fork's public identity.\n* **Extension About page:** align author and repository links with `maxcodl/shotgun-patches`.\n\n### 🔄 分支 Manifest 與來源資訊 (v4.0.0-dev.12)\n\n* **Manifest:** 將繼承的 Burhanverse 來源、作者、聯絡方式與網站資訊替換為此分支的公開身份。\n* **Extension About 頁面:** 將作者與儲存庫連結同步至 `maxcodl/shotgun-patches`。",
+  "download_url": "https://github.com/maxcodl/shotgun-patches/releases/download/v4.0.0-dev.12/patches-4.0.0-dev.12.mpp",
+  "signature_download_url": "",
+  "version": "4.0.0-dev.12"
 }

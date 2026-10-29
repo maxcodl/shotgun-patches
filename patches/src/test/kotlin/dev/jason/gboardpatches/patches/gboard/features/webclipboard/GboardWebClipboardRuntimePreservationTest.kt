@@ -11,7 +11,7 @@ class GboardWebClipboardRuntimePreservationTest {
     private val repositoryRoot = repositoryRoot()
 
     @Test
-    fun acceptedRuntimePortalAssetsManifestSettingsAndTileSourcesStayByteExact() {
+    fun reviewed1853RuntimePermissionFixAndUnchangedPortalAssetsRemainPinned() {
         assertEquals(
             RUNTIME_JAVA_SHA256,
             treeDigest("extensions/extension/src/main/java/dev/jason/gboardpatches/extension/webclipboard"),
@@ -28,6 +28,8 @@ class GboardWebClipboardRuntimePreservationTest {
             NON_CAPTURE_PATCHES_SHA256,
             filesDigest(
                 listOf(
+                    "patches/src/main/kotlin/dev/jason/gboardpatches/patches/gboard/shared/" +
+                        "GboardManifestXmlUtils.kt",
                     "patches/src/main/kotlin/dev/jason/gboardpatches/patches/gboard/features/" +
                         "webclipboard/GboardWebClipboardAssetsPatch.kt",
                     "patches/src/main/kotlin/dev/jason/gboardpatches/patches/gboard/features/" +
@@ -91,14 +93,16 @@ class GboardWebClipboardRuntimePreservationTest {
     }
 
     private companion object {
+        // Web Clipboard FGS type intentionally moved dataSync -> connectedDevice (6h dataSync limit);
+        // runtime restarts on BOOT_COMPLETED.
         const val RUNTIME_JAVA_SHA256 =
-            "75E672C1B07E84B15A431D4488FED66E2C2F4E3C4C48EF4E5D2DF4D5EF6F2589"
+            "E6E649FFA2F0B03269EBA5CD3107DCA2AA0FE73F76592C1374B7536E061E7278"
         const val PORTAL_ASSETS_SHA256 =
-            "DE38DBE50AD0F82EE9D2357B0EADA6680F270845A36CAB6B9A719576DD40E3AC"
+            "E9AACB386C26A695C070FC3DA99DD6DEB36DEF5E60D23EFC949502793F433287"
         const val RESOURCE_SHA256 =
             "DE0AEBDC3D5D36AC06CEA66334E5528CAF8319122680F59761FAC4423E3C49F2"
         const val NON_CAPTURE_PATCHES_SHA256 =
-            "B1ED6A3375C989F5C08A951FEEB1A4949133F86F4826C602552D4C3D21E719BF"
+            "9368145E2AD4C10530FBAA37C57C41EF1577D8CF01558B213A7389E9BA1A52C6"
         // STRONG #4 intentionally narrows settings features from Host to FeatureHost.
         const val SETTINGS_RUNTIME_SHA256 =
             "4406B8F10478D995223CC5F92EAE4195EC04BC90FFA051BBEC867C44B63167D0"

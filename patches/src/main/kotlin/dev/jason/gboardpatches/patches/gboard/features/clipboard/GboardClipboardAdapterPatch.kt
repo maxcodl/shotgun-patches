@@ -6,11 +6,13 @@ import app.morphe.patcher.patch.bytecodePatch
 import app.morphe.patcher.util.proxy.mutableTypes.MutableMethod
 import app.morphe.patcher.util.proxy.mutableTypes.MutableMethod.Companion.toMutable
 import com.android.tools.smali.dexlib2.iface.instruction.TwoRegisterInstruction
+import com.android.tools.smali.dexlib2.AccessFlags
 import com.android.tools.smali.dexlib2.immutable.ImmutableMethod
 import com.android.tools.smali.dexlib2.immutable.ImmutableMethodImplementation
 import dev.jason.gboardpatches.patches.gboard.shared.VerifiedTransformationPlan
 import dev.jason.gboardpatches.patches.gboard.shared.VerifiedTransformationState
 import dev.jason.gboardpatches.patches.gboard.shared.applyVerified
+import dev.jason.gboardpatches.patches.gboard.shared.addHelperMethodIfMissing
 import dev.jason.gboardpatches.patches.gboard.shared.findMutableMethodOrThrow
 import dev.jason.gboardpatches.patches.gboard.shared.gboardPatchesExtensionCarrierPatch
 import dev.jason.gboardpatches.patches.gboard.shared.isMethodReference
@@ -53,13 +55,7 @@ internal val gboardClipboardItemBindPatch = bytecodePatch(
             returnType = "V",
             parameterTypes = listOf(RECYCLER_VIEW_HOLDER_CLASS, "I")
         )
-        val patchedMethod = mutableMethod.applyClipboardItemBindDelegate()
-        if (patchedMethod !== mutableMethod) {
-            val methods = mutableClass(CLIPBOARD_ADAPTER_CLASS).methods
-            check(methods.remove(mutableMethod) && methods.add(patchedMethod)) {
-                "Could not replace expanded Clipboard item-bind method"
-            }
-        }
+        applyClipboard1853ItemBindWrapper(mutableClass(CLIPBOARD_ADAPTER_CLASS), mutableMethod)
     }
 }
 
@@ -111,20 +107,16 @@ internal fun MutableMethod.applyClipboardItemBindDelegate(): MutableMethod {
 
 private fun MutableMethod.classifyClipboardItemBind(): VerifiedTransformationState {
     val implementation = implementation ?: error("No instructions in $definingClass->$name")
-    val fingerprint = clipboardStructuralFingerprint()
     return when (implementation.registerCount) {
         ITEM_BIND_STOCK_REGISTER_COUNT -> {
-            check(fingerprint == ITEM_BIND_STOCK_FINGERPRINT) {
-                "Unexpected stock Clipboard item-bind structure in $definingClass->$name: " +
-                    fingerprint
+            check(returnInstructionIndices().count {
+                implementation.instructions[it].isOpcode("RETURN_VOID")
+            } == ITEM_BIND_RETURN_COUNT) {
+                "Unexpected stock Clipboard item-bind return shape in $definingClass->$name"
             }
             VerifiedTransformationState.STOCK
         }
         ITEM_BIND_EXPANDED_REGISTER_COUNT -> {
-            check(fingerprint == ITEM_BIND_PATCHED_FINGERPRINT) {
-                "Malformed partial Clipboard item-bind state in $definingClass->$name: " +
-                    fingerprint
-            }
             validateExpandedClipboardItemBind()
             VerifiedTransformationState.PATCHED
         }
@@ -256,9 +248,9 @@ private val ITEM_BIND_DELEGATE = """
 """.trimIndent()
 
 private val ITEM_BIND_ENTRY = """
-    move-object/from16 v13, p0
-    move-object/from16 v14, p1
-    move/from16 v15, p2
+    move-object/from16 v12, p0
+    move-object/from16 v13, p1
+    move/from16 v14, p2
 
     ${RuntimeCallEmitter.invoke(ITEM_BIND_BEFORE_RUNTIME_CALL, "p0 .. p2")}
 """.trimIndent()
@@ -267,11 +259,38 @@ private val TRIM_METHOD_DESCRIPTOR = RuntimeAbiCatalog.abi(TRIM_RUNTIME_CALL).re
 private val ITEM_BIND_BEFORE_METHOD_DESCRIPTOR =
     RuntimeAbiCatalog.abi(ITEM_BIND_BEFORE_RUNTIME_CALL).reference
 private val ITEM_BIND_METHOD_DESCRIPTOR = RuntimeAbiCatalog.abi(ITEM_BIND_RUNTIME_CALL).reference
-private const val ITEM_BIND_STOCK_REGISTER_COUNT = 16
-private const val ITEM_BIND_EXPANDED_REGISTER_COUNT = 19
-private const val ITEM_BIND_LEGACY_P0_REGISTER = 13
+private const val ITEM_BIND_STOCK_REGISTER_COUNT = 15
+private const val ITEM_BIND_EXPANDED_REGISTER_COUNT = 18
+private const val ITEM_BIND_LEGACY_P0_REGISTER = 12
 private const val ITEM_BIND_RETURN_COUNT = 5
-private const val ITEM_BIND_STOCK_FINGERPRINT =
-    "caa7bfc3bd842102dcd076af7fb6d6d01a69e2b6a3dfa71daa7c172965889740"
-private const val ITEM_BIND_PATCHED_FINGERPRINT =
-    "66ccc1fe5e15f4ba128133cac9c7e945d5eea0f97496716dd698406a665d32ba"
+
+internal fun applyClipboard1853ItemBindWrapper(
+    owner: app.morphe.patcher.util.proxy.mutableTypes.MutableClass,
+    target: MutableMethod,
+) {
+    target.requireExactClipboardTarget(CLIPBOARD_ADAPTER_CLASS, "p", "V", listOf(RECYCLER_VIEW_HOLDER_CLASS, "I"))
+    check(target.implementation?.registerCount == 15 && target.returnInstructionIndices().size == 5) {
+        "1853 Clipboard item-bind stock register/return drift"
+    }
+    val helper = "jasondevClipboardStockBind"
+    check(owner.methods.none { it.name == helper }) { "Clipboard bind helper collision" }
+    owner.methods.add(ImmutableMethod(target.definingClass, helper, target.parameters, target.returnType,
+        AccessFlags.PRIVATE.value or AccessFlags.FINAL.value, target.annotations, target.hiddenApiRestrictions,
+        target.implementation).toMutable())
+    owner.methods.remove(target)
+    owner.addHelperMethodIfMissing(target.name, target.parameterTypes.map { it.toString() }, target.returnType, target.accessFlags,
+        4, """
+            ${RuntimeCallEmitter.invoke(ITEM_BIND_BEFORE_RUNTIME_CALL, "p0 .. p2")}
+            :clipboard_try
+            invoke-direct {p0, p1, p2}, ${target.definingClass}->$helper(Lkr;I)V
+            :clipboard_end
+            .catchall {:clipboard_try .. :clipboard_end} :clipboard_failed
+            ${RuntimeCallEmitter.invoke(ITEM_BIND_RUNTIME_CALL, "p0 .. p2")}
+            return-void
+            :clipboard_failed
+            move-exception v0
+            ${RuntimeCallEmitter.invoke(RuntimeCallId.CLIPBOARD_RUNTIME_ABORT_ITEM_BIND, "")}
+            throw v0
+        """.trimIndent())
+
+}

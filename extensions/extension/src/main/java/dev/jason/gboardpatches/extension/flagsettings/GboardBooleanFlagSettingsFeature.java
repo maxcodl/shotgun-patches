@@ -32,6 +32,7 @@ public class GboardBooleanFlagSettingsFeature
     private final String sectionTitle;
     private final GboardPatchesSettingsContract.PreviewSpec previewSpec;
     private final SettingsStore settingsStore;
+    private String restartKey;
 
     public GboardBooleanFlagSettingsFeature(
             String featureMarker,
@@ -54,6 +55,10 @@ public class GboardBooleanFlagSettingsFeature
         this.sectionTitle = sectionTitle;
         this.previewSpec = previewSpec;
         this.settingsStore = settingsStore;
+    }
+
+    protected final void declareRestartRequired(String preferenceKey) {
+        this.restartKey = preferenceKey;
     }
 
     @Override
@@ -84,7 +89,11 @@ public class GboardBooleanFlagSettingsFeature
                     settingsStore.readEnabled(preferences),
                     enabled -> settingsStore.writeEnabled(preferences, enabled));
         } catch (Throwable throwable) {
-            Log.w(TAG, "Failed to render flag settings: " + featureMarker, throwable);
+            try {
+                Log.w(TAG, "Failed to render flag settings: " + featureMarker, throwable);
+            } catch (Throwable ignored) {
+                // Rendering the warning screen is the only remaining action.
+            }
             return buildErrorScreen();
         }
     }
@@ -106,7 +115,8 @@ public class GboardBooleanFlagSettingsFeature
                                 true,
                                 enabled,
                                 toggleAction,
-                                previewSpec)))),
+                                previewSpec)
+                                .setRestartRequired(restartKey)))),
                 GboardPatchesSettingsContract.RefreshPolicy.none(),
                 GboardPatchesSettingsContract.PanelStyle.FLAT);
     }

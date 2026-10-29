@@ -1,31 +1,28 @@
 package dev.jason.gboardpatches.patches.shared
 
-import app.morphe.patcher.patch.ApkFileType
 import app.morphe.patcher.patch.AppTarget
 import app.morphe.patcher.patch.Compatibility
+import dev.jason.gboardpatches.patches.gboard.shared.generated.GboardTargetAdmission
 
 internal object Constants {
     const val GBOARD_PACKAGE_NAME = "com.google.android.inputmethod.latin"
     const val GBOARD_PATCHED_PACKAGE_NAME = "dev.jason.com.google.android.inputmethod.latin"
-    const val GBOARD_PATCH_AUTHOR = "jasonwu1994"
-    const val GBOARD_PATCH_AUTHOR_URL = "https://github.com/jasonwu1994"
-    const val GBOARD_PATCH_REPOSITORY_URL = "https://github.com/jasonwu1994/Gboard-patches"
+    const val GBOARD_PATCH_AUTHOR = "maxcodl"
+    const val GBOARD_PATCH_AUTHOR_URL = "https://github.com/maxcodl"
+    const val GBOARD_PATCH_REPOSITORY_URL = "https://github.com/maxcodl/shotgun-patches"
     val GBOARD_PATCH_VERSION = PatchBuildInfo.VERSION
 
     val COMPATIBILITY_GBOARD = Compatibility(
         name = "Gboard",
-        packageName = GBOARD_PACKAGE_NAME,
-        apkFileType = ApkFileType.APK,
+        packageName = GboardTargetAdmission.packageName,
+        apkFileType = GboardTargetAdmission.apkFileType,
         appIconColor = 0x1A73E8,
-        signatures = setOf(
-            "7ce83c1b71f3d572fed04c8d40c5cb10ff75e6d87d9df6fbd53f0468c2905053",
-            "f0fd6c5b410f25cb25c3b53346c8972fae30f8ee7411df910480ad6b2d60db83"
-        ),
-        targets = listOf(
+        signatures = GboardTargetAdmission.signatures,
+        targets = GboardTargetAdmission.versionNames.map { versionName ->
             AppTarget(
-                version = "17.7.7.932364120-release-arm64-v8a",
-                isExperimental = false
+                version = versionName,
+                isExperimental = false,
             )
-        )
+        },
     )
 }

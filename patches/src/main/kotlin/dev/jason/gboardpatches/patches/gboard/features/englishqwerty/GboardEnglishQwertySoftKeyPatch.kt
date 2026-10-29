@@ -1,14 +1,11 @@
 package dev.jason.gboardpatches.patches.gboard.features.englishqwerty
 
-import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
-import app.morphe.patcher.patch.BytecodePatchContext
-import app.morphe.patcher.patch.bytecodePatch
+import app.morphe.patcher.util.proxy.mutableTypes.MutableClass
 import com.android.tools.smali.dexlib2.AccessFlags
-import dev.jason.gboardpatches.patches.gboard.features.toprowswipe.TOP_ROW_SWIPE_RUNTIME_CLASS
+import dev.jason.gboardpatches.patches.gboard.shared.GboardSoftKeyFamilyFeature
 import dev.jason.gboardpatches.patches.gboard.shared.addHelperMethodIfMissing
-import dev.jason.gboardpatches.patches.gboard.shared.findMutableMethodOrThrow
+import dev.jason.gboardpatches.patches.gboard.shared.gboardSoftKeyFamilyFeaturePatch
 import dev.jason.gboardpatches.patches.gboard.shared.generated.GboardVersionBindings
-import dev.jason.gboardpatches.patches.gboard.shared.indexOfFirstMethodCall
 import dev.jason.gboardpatches.patches.gboard.shared.runtimeabi.RuntimeAbiCatalog
 import dev.jason.gboardpatches.patches.gboard.shared.runtimeabi.RuntimeCallEmitter
 import dev.jason.gboardpatches.patches.gboard.shared.runtimeabi.RuntimeCallId
@@ -18,21 +15,24 @@ private const val SOFT_KEY_VIEW_CLASS =
 private val ENGLISH_UPPERCASE_RUNTIME_CLASS = RuntimeAbiCatalog.abi(
     RuntimeCallId.ENGLISH_UPPERCASE_TOGGLE_RUNTIME_IS_ENABLED,
 ).owner
-private val softKeyMetadataType = GboardVersionBindings.softKeyMetadataType.descriptor
+private val softKeyMetadataType: String
+    get() = GboardVersionBindings.softKeyMetadataType.descriptor
 
-internal val gboardEnglishQwertySoftKeyPatch = bytecodePatch(
-    description = "在 17.7.7 English QWERTY bind time 注入缺少的上滑大小寫 action。"
-) {
-    execute {
-        addHelperMethods()
-        injectMethodDelegate()
-    }
-}
+internal val gboardEnglishQwertySoftKeyPatch = gboardSoftKeyFamilyFeaturePatch(
+    description = "在 18.5.4 English QWERTY bind time 注入缺少的上滑大小寫 action。",
+    feature = GboardSoftKeyFamilyFeature.ENGLISH_QWERTY,
+)
 
-context(context: BytecodePatchContext)
-private fun addHelperMethods() = with(context) {
+internal val GBOARD_ENGLISH_SOFT_KEY_HELPER_NAMES = setOf(
+    "jasondevToggleAsciiCase",
+    "jasondevResolvePrimaryLabel",
+    "jasondevResolvePressPayload",
+    "jasondevIsEnglishQwertyKeyId",
+    "jasondevPatchIncomingMetadata",
+)
+
+internal fun MutableClass.installGboardEnglishQwertySoftKeyHelpers() {
     addHelperMethodIfMissing(
-        classType = SOFT_KEY_VIEW_CLASS,
         name = "jasondevToggleAsciiCase",
         parameterTypes = listOf("Ljava/lang/String;"),
         returnType = "Ljava/lang/String;",
@@ -41,7 +41,6 @@ private fun addHelperMethods() = with(context) {
         body = TOGGLE_ASCII_CASE_BODY
     )
     addHelperMethodIfMissing(
-        classType = SOFT_KEY_VIEW_CLASS,
         name = "jasondevResolvePrimaryLabel",
         parameterTypes = listOf(softKeyMetadataType),
         returnType = "Ljava/lang/String;",
@@ -50,7 +49,6 @@ private fun addHelperMethods() = with(context) {
         body = RESOLVE_PRIMARY_LABEL_BODY
     )
     addHelperMethodIfMissing(
-        classType = SOFT_KEY_VIEW_CLASS,
         name = "jasondevResolvePressPayload",
         parameterTypes = listOf(softKeyMetadataType),
         returnType = "Ljava/lang/String;",
@@ -59,7 +57,6 @@ private fun addHelperMethods() = with(context) {
         body = RESOLVE_PRESS_PAYLOAD_BODY
     )
     addHelperMethodIfMissing(
-        classType = SOFT_KEY_VIEW_CLASS,
         name = "jasondevIsEnglishQwertyKeyId",
         parameterTypes = listOf("I"),
         returnType = "Z",
@@ -68,7 +65,6 @@ private fun addHelperMethods() = with(context) {
         body = IS_ENGLISH_QWERTY_KEY_ID_BODY
     )
     addHelperMethodIfMissing(
-        classType = SOFT_KEY_VIEW_CLASS,
         name = "jasondevPatchIncomingMetadata",
         parameterTypes = listOf(softKeyMetadataType),
         returnType = softKeyMetadataType,
@@ -77,30 +73,6 @@ private fun addHelperMethods() = with(context) {
         body = PATCH_INCOMING_METADATA_BODY
     )
 }
-
-context(context: BytecodePatchContext)
-private fun injectMethodDelegate() = with(context) {
-    val mutableMethod = findMutableMethodOrThrow(GboardVersionBindings.softKeyBind)
-    val topRowDelegateCallIndex = mutableMethod.indexOfFirstMethodCall(
-        definingClass = TOP_ROW_SWIPE_RUNTIME_CLASS,
-        name = "patchIncomingSoftKeyMetadata",
-        returnType = "Ljava/lang/Object;",
-        parameterTypes = listOf("Ljava/lang/Object;", "Ljava/lang/Object;")
-    )
-    val insertIndex = if (topRowDelegateCallIndex >= 0) {
-        topRowDelegateCallIndex + 3
-    } else {
-        0
-    }
-
-    mutableMethod.addInstructions(insertIndex, PATCH_INCOMING_METADATA_DELEGATE)
-}
-
-private val PATCH_INCOMING_METADATA_DELEGATE = """
-    invoke-direct {p0, p1}, $SOFT_KEY_VIEW_CLASS->jasondevPatchIncomingMetadata($softKeyMetadataType)$softKeyMetadataType
-
-    move-result-object p1
-""".trimIndent()
 
 private val TOGGLE_ASCII_CASE_BODY = """
     if-eqz p0, :cond_invalid
@@ -165,18 +137,22 @@ private val TOGGLE_ASCII_CASE_BODY = """
 private val RESOLVE_PRIMARY_LABEL_BODY = """
     if-eqz p0, :cond_none
 
-    iget-object p0, p0, Lowd;->g:[Ljava/lang/CharSequence;
+    iget-object p0, p0, Lcom/google/android/libraries/inputmethod/metadata/SoftKeyDef;->i:Lwns;
 
     if-eqz p0, :cond_none
 
-    array-length v0, p0
+    invoke-interface {p0}, Ljava/util/List;->size()I
+
+    move-result v0
 
     const/4 v1, 0x0
 
     :goto_0
     if-ge v1, v0, :cond_none
 
-    aget-object v2, p0, v1
+    invoke-interface {p0, v1}, Ljava/util/List;->get(I)Ljava/lang/Object;
+
+    move-result-object v2
 
     if-eqz v2, :cond_next
 
@@ -208,30 +184,36 @@ private val RESOLVE_PRIMARY_LABEL_BODY = """
 private val RESOLVE_PRESS_PAYLOAD_BODY = """
     if-eqz p0, :cond_none
 
-    sget-object v0, Loth;->a:Loth;
+    sget-object v0, Lqae;->a:Lqae;
 
-    invoke-virtual {p0, v0}, Lowd;->h(Loth;)Lotk;
+    invoke-virtual {p0, v0}, Lcom/google/android/libraries/inputmethod/metadata/SoftKeyDef;->g(Lqae;)Lcom/google/android/libraries/inputmethod/metadata/ActionDef;
 
     move-result-object v0
 
     if-eqz v0, :cond_none
 
-    iget-object v0, v0, Lotk;->d:[Loud;
+    iget-object v0, v0, Lcom/google/android/libraries/inputmethod/metadata/ActionDef;->f:Lwns;
 
     if-eqz v0, :cond_none
 
-    array-length v1, v0
+    invoke-interface {v0}, Ljava/util/List;->size()I
+
+    move-result v1
 
     const/4 v2, 0x0
 
     :goto_0
     if-ge v2, v1, :cond_none
 
-    aget-object v3, v0, v2
+    invoke-interface {v0, v2}, Ljava/util/List;->get(I)Ljava/lang/Object;
+
+    move-result-object v3
+
+    check-cast v3, Lqbc;
 
     if-eqz v3, :cond_next
 
-    iget-object v3, v3, Loud;->e:Ljava/lang/Object;
+    iget-object v3, v3, Lqbc;->e:Ljava/lang/Object;
 
     instance-of v4, v3, Ljava/lang/CharSequence;
 
@@ -278,58 +260,58 @@ private val IS_ENGLISH_QWERTY_KEY_ID_BODY = """
 
     :sswitch_data_0
     .sparse-switch
-        0x7f0b19f6 -> :sswitch_0
-        0x7f0b18df -> :sswitch_0
-        0x7f0b1a66 -> :sswitch_0
-        0x7f0b190d -> :sswitch_0
-        0x7f0b196d -> :sswitch_0
-        0x7f0b187b -> :sswitch_0
-        0x7f0b19fa -> :sswitch_0
-        0x7f0b18e0 -> :sswitch_0
-        0x7f0b1a2d -> :sswitch_0
-        0x7f0b18ee -> :sswitch_0
-        0x7f0b1a6e -> :sswitch_0
-        0x7f0b1911 -> :sswitch_0
-        0x7f0b1a4e -> :sswitch_0
-        0x7f0b18f8 -> :sswitch_0
-        0x7f0b199c -> :sswitch_0
-        0x7f0b18a0 -> :sswitch_0
-        0x7f0b19d9 -> :sswitch_0
-        0x7f0b18c8 -> :sswitch_0
-        0x7f0b19ef -> :sswitch_0
-        0x7f0b18dd -> :sswitch_0
-        0x7f0b193c -> :sswitch_0
-        0x7f0b185e -> :sswitch_0
-        0x7f0b1a05 -> :sswitch_0
-        0x7f0b18e5 -> :sswitch_0
-        0x7f0b195f -> :sswitch_0
-        0x7f0b1876 -> :sswitch_0
-        0x7f0b1983 -> :sswitch_0
-        0x7f0b188e -> :sswitch_0
-        0x7f0b1987 -> :sswitch_0
+        0x7f0b17f7 -> :sswitch_0
+        0x7f0b1806 -> :sswitch_0
+        0x7f0b1808 -> :sswitch_0
+        0x7f0b180f -> :sswitch_0
+        0x7f0b1813 -> :sswitch_0
+        0x7f0b1826 -> :sswitch_0
+        0x7f0b1828 -> :sswitch_0
+        0x7f0b1833 -> :sswitch_0
+        0x7f0b1838 -> :sswitch_0
+        0x7f0b1849 -> :sswitch_0
+        0x7f0b184b -> :sswitch_0
+        0x7f0b184f -> :sswitch_0
+        0x7f0b1853 -> :sswitch_0
+        0x7f0b1857 -> :sswitch_0
+        0x7f0b1860 -> :sswitch_0
+        0x7f0b1875 -> :sswitch_0
+        0x7f0b1877 -> :sswitch_0
+        0x7f0b1878 -> :sswitch_0
+        0x7f0b187d -> :sswitch_0
+        0x7f0b1886 -> :sswitch_0
         0x7f0b1890 -> :sswitch_0
-        0x7f0b1996 -> :sswitch_0
-        0x7f0b189b -> :sswitch_0
-        0x7f0b19ad -> :sswitch_0
-        0x7f0b18b1 -> :sswitch_0
-        0x7f0b19b1 -> :sswitch_0
-        0x7f0b18b3 -> :sswitch_0
-        0x7f0b19b9 -> :sswitch_0
-        0x7f0b18b7 -> :sswitch_0
-        0x7f0b1a75 -> :sswitch_0
-        0x7f0b1915 -> :sswitch_0
-        0x7f0b1a6b -> :sswitch_0
-        0x7f0b1910 -> :sswitch_0
+        0x7f0b18a3 -> :sswitch_0
+        0x7f0b18a5 -> :sswitch_0
+        0x7f0b18a8 -> :sswitch_0
+        0x7f0b18a9 -> :sswitch_0
+        0x7f0b18ad -> :sswitch_0
+        0x7f0b18d4 -> :sswitch_0
+        0x7f0b18e4 -> :sswitch_0
+        0x7f0b18e9 -> :sswitch_0
+        0x7f0b18f7 -> :sswitch_0
+        0x7f0b1905 -> :sswitch_0
+        0x7f0b191b -> :sswitch_0
+        0x7f0b191f -> :sswitch_0
+        0x7f0b192e -> :sswitch_0
+        0x7f0b1934 -> :sswitch_0
+        0x7f0b1945 -> :sswitch_0
+        0x7f0b1949 -> :sswitch_0
         0x7f0b1951 -> :sswitch_0
-        0x7f0b186f -> :sswitch_0
-        0x7f0b1a63 -> :sswitch_0
-        0x7f0b190b -> :sswitch_0
-        0x7f0b194c -> :sswitch_0
-        0x7f0b186d -> :sswitch_0
-        0x7f0b19cd -> :sswitch_0
-        0x7f0b18bf -> :sswitch_0
-        0x7f0b19c6 -> :sswitch_0
-        0x7f0b18bb -> :sswitch_0
+        0x7f0b195e -> :sswitch_0
+        0x7f0b1965 -> :sswitch_0
+        0x7f0b1971 -> :sswitch_0
+        0x7f0b1987 -> :sswitch_0
+        0x7f0b198e -> :sswitch_0
+        0x7f0b1992 -> :sswitch_0
+        0x7f0b199d -> :sswitch_0
+        0x7f0b19c5 -> :sswitch_0
+        0x7f0b19e6 -> :sswitch_0
+        0x7f0b19fb -> :sswitch_0
+        0x7f0b19fe -> :sswitch_0
+        0x7f0b1a03 -> :sswitch_0
+        0x7f0b1a06 -> :sswitch_0
+        0x7f0b1a0d -> :sswitch_0
     .end sparse-switch
 """.trimIndent()
 
@@ -352,7 +334,7 @@ private val PATCH_INCOMING_METADATA_BODY = """
 
     if-nez v0, :cond_return_original_safe
 
-    iget v0, p1, Lowd;->d:I
+    iget v0, p1, Lcom/google/android/libraries/inputmethod/metadata/SoftKeyDef;->f:I
 
     invoke-static {v0}, $SOFT_KEY_VIEW_CLASS->jasondevIsEnglishQwertyKeyId(I)Z
 
@@ -360,9 +342,9 @@ private val PATCH_INCOMING_METADATA_BODY = """
 
     if-eqz v0, :cond_return_original_safe
 
-    sget-object v0, Loth;->c:Loth;
+    sget-object v0, Lqae;->c:Lqae;
 
-    invoke-virtual {p1, v0}, Lowd;->h(Loth;)Lotk;
+    invoke-virtual {p1, v0}, Lcom/google/android/libraries/inputmethod/metadata/SoftKeyDef;->g(Lqae;)Lcom/google/android/libraries/inputmethod/metadata/ActionDef;
 
     move-result-object v0
 
@@ -377,17 +359,17 @@ private val PATCH_INCOMING_METADATA_BODY = """
 
     if-eqz v0, :cond_cache_miss
 
-    check-cast v0, Lowd;
+    check-cast v0, Lcom/google/android/libraries/inputmethod/metadata/SoftKeyDef;
 
     return-object v0
 
     :cond_cache_miss
 
-    invoke-static {p1}, $SOFT_KEY_VIEW_CLASS->jasondevResolvePrimaryLabel(Lowd;)Ljava/lang/String;
+    invoke-static {p1}, $SOFT_KEY_VIEW_CLASS->jasondevResolvePrimaryLabel(Lcom/google/android/libraries/inputmethod/metadata/SoftKeyDef;)Ljava/lang/String;
 
     move-result-object v1
 
-    invoke-static {p1}, $SOFT_KEY_VIEW_CLASS->jasondevResolvePressPayload(Lowd;)Ljava/lang/String;
+    invoke-static {p1}, $SOFT_KEY_VIEW_CLASS->jasondevResolvePressPayload(Lcom/google/android/libraries/inputmethod/metadata/SoftKeyDef;)Ljava/lang/String;
 
     move-result-object v2
 
@@ -411,19 +393,19 @@ private val PATCH_INCOMING_METADATA_BODY = """
     if-eqz v0, :cond_return_original_safe
 
     :cond_build_action
-    new-instance v4, Lovv;
+    new-instance v4, Lqcv;
 
-    invoke-direct {v4}, Lovv;-><init>()V
+    invoke-direct {v4}, Lqcv;-><init>()V
 
-    invoke-virtual {v4, p1}, Lovv;->j(Lowd;)V
+    invoke-virtual {v4, p1}, Lqcv;->k(Lcom/google/android/libraries/inputmethod/metadata/SoftKeyDef;)V
 
-    new-instance v5, Loti;
+    new-instance v5, Lqaf;
 
-    invoke-direct {v5}, Loti;-><init>()V
+    invoke-direct {v5}, Lqaf;-><init>()V
 
-    sget-object v6, Loth;->c:Loth;
+    sget-object v6, Lqae;->c:Lqae;
 
-    iput-object v6, v5, Loti;->a:Loth;
+    iput-object v6, v5, Lqaf;->a:Lqae;
 
     const/4 v6, 0x1
 
@@ -433,27 +415,27 @@ private val PATCH_INCOMING_METADATA_BODY = """
 
     aput-object v3, v7, v6
 
-    iput-object v7, v5, Loti;->c:[Ljava/lang/String;
+    invoke-virtual {v5, v7}, Lqaf;->t([Ljava/lang/String;)V
 
     const v7, -0x2719
 
-    sget-object v8, Louc;->c:Louc;
+    sget-object v8, Lqbb;->c:Lqbb;
 
-    invoke-virtual {v5, v7, v8, v3}, Loti;->q(ILouc;Ljava/lang/Object;)V
+    invoke-virtual {v5, v7, v8, v3}, Lqaf;->s(ILqbb;Ljava/lang/Object;)V
 
-    invoke-virtual {v5}, Loti;->c()Lotk;
+    invoke-virtual {v5}, Lqaf;->c()Lcom/google/android/libraries/inputmethod/metadata/ActionDef;
 
     move-result-object v5
 
     if-eqz v5, :cond_return_original_safe
 
-    invoke-virtual {v4, v5}, Lovv;->q(Lotk;)V
+    invoke-virtual {v4, v5}, Lqcv;->t(Lcom/google/android/libraries/inputmethod/metadata/ActionDef;)V
 
-    invoke-virtual {v4}, Lovv;->d()Ljava/lang/Object;
+    invoke-virtual {v4}, Lqcv;->b()Lcom/google/android/libraries/inputmethod/metadata/SoftKeyDef;
 
     move-result-object v0
 
-    check-cast v0, Lowd;
+    check-cast v0, Lcom/google/android/libraries/inputmethod/metadata/SoftKeyDef;
 
     if-eqz v0, :cond_return_original_safe
 
@@ -464,7 +446,7 @@ private val PATCH_INCOMING_METADATA_BODY = """
 
     move-result-object v0
 
-    check-cast v0, Lowd;
+    check-cast v0, Lcom/google/android/libraries/inputmethod/metadata/SoftKeyDef;
 
     if-eqz v0, :cond_return_original_safe
 

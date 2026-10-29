@@ -25,14 +25,14 @@ import org.robolectric.RuntimeEnvironment;
 
 @RunWith(RobolectricTestRunner.class)
 public final class GboardZhuyinTraditionalSimplifiedToggleRuntimeBehaviorTest {
-    private static final int TOGGLE_KEY_ID = 0x7f0b28ca;
+    private static final int TOGGLE_KEY_ID = 0x7f0b28c5;
 
     private Context context;
 
     @Before
     public void resetFixtureState() throws Exception {
         context = RuntimeEnvironment.getApplication();
-        invokeStatic("pnp", "reset");
+        invokeStatic("qvt", "reset");
         GboardZhuyinTraditionalSimplifiedToggleRuntime.VISIBLE_TOGGLE_KEYS.clear();
     }
 
@@ -124,7 +124,7 @@ public final class GboardZhuyinTraditionalSimplifiedToggleRuntimeBehaviorTest {
         GboardZhuyinToggleTargetFixture.bind(sourceView, patched, 55L);
         GboardZhuyinTraditionalSimplifiedToggleRuntime.afterSoftKeyBound(sourceView);
         Object originalAction = action(patched, "SLIDE_UP");
-        Object originalEntries = field(originalAction, "d").get(originalAction);
+        Object originalEntries = field(originalAction, "f").get(originalAction);
 
         preferences().getClass()
                 .getMethod("setSimplifiedEnabled", boolean.class)
@@ -134,7 +134,7 @@ public final class GboardZhuyinTraditionalSimplifiedToggleRuntimeBehaviorTest {
                         sourceView, originalAction);
 
         assertNotSame(originalAction, popupAction);
-        assertSame(originalEntries, field(popupAction, "d").get(popupAction));
+        assertSame(originalEntries, field(popupAction, "f").get(popupAction));
         assertEquals("繁", firstLabel(popupAction));
 
         FrameLayout untracked = new FrameLayout(context);
@@ -151,8 +151,8 @@ public final class GboardZhuyinTraditionalSimplifiedToggleRuntimeBehaviorTest {
                 .getMethod("setThrowOnWrite", boolean.class)
                 .invoke(preferences, Boolean.TRUE);
         Object dispatcher = newDispatcher(preferences);
-        Object action = enumValue("oth", "SLIDE_UP");
-        Object metadata = newMetadata(TOGGLE_KEY_ID);
+        Object action = enumValue("qae", "SLIDE_UP");
+        Object metadata = toggleMetadata("簡");
 
         assertFalse(GboardZhuyinTraditionalSimplifiedToggleRuntime.maybeToggle(
                 dispatcher, action, metadata));
@@ -183,7 +183,7 @@ public final class GboardZhuyinTraditionalSimplifiedToggleRuntimeBehaviorTest {
 
         Object dispatcher = newDispatcher(preferences());
         assertTrue(GboardZhuyinTraditionalSimplifiedToggleRuntime.maybeToggle(
-                dispatcher, enumValue("oth", "SLIDE_UP"), newMetadata(TOGGLE_KEY_ID)));
+                dispatcher, enumValue("qae", "SLIDE_UP"), toggleMetadata("簡")));
 
         assertEquals(2, GboardZhuyinToggleTargetFixture.bindCount(successfulView));
         assertEquals(101L, GboardZhuyinToggleTargetFixture.bindToken(successfulView));
@@ -201,31 +201,31 @@ public final class GboardZhuyinTraditionalSimplifiedToggleRuntimeBehaviorTest {
     }
 
     private Object newMetadata(int keyId) throws Exception {
-        return targetClass("owd").getConstructor(int.class).newInstance(Integer.valueOf(keyId));
+        return targetClass("com.google.android.libraries.inputmethod.metadata.SoftKeyDef").getConstructor(int.class).newInstance(Integer.valueOf(keyId));
     }
 
     private Object toggleMetadata(String label) throws Exception {
-        return targetClass("owd")
+        return targetClass("com.google.android.libraries.inputmethod.metadata.SoftKeyDef")
                 .getMethod("toggle", int.class, String.class)
                 .invoke(null, Integer.valueOf(TOGGLE_KEY_ID), label);
     }
 
     private Object newDispatcher(Object preferences) throws Exception {
-        return targetClass("pbj")
-                .getConstructor(Context.class, targetClass("pnp"))
+        return targetClass("qil")
+                .getConstructor(Context.class, targetClass("qvt"))
                 .newInstance(context, preferences);
     }
 
     private Object preferences() throws Exception {
-        return targetClass("pnp").getMethod("instance").invoke(null);
+        return targetClass("qvt").getMethod("instance").invoke(null);
     }
 
     private void assertToggleAction(Object metadata, String label) throws Exception {
         Object action = action(metadata, "SLIDE_UP");
-        assertEquals("SLIDE_UP", ((Enum<?>) field(action, "c").get(action)).name());
-        Object entries = field(action, "d").get(action);
-        assertEquals(1, Array.getLength(entries));
-        Object entry = Array.get(entries, 0);
+        assertEquals("SLIDE_UP", ((Enum<?>) field(action, "e").get(action)).name());
+        java.util.List<?> entries = (java.util.List<?>) field(action, "f").get(action);
+        assertEquals(1, entries.size());
+        Object entry = entries.get(0);
         assertEquals(-0x2719, field(entry, "c").getInt(entry));
         assertEquals("COMMIT", ((Enum<?>) field(entry, "d").get(entry)).name());
         assertEquals("", field(entry, "e").get(entry));
@@ -233,15 +233,15 @@ public final class GboardZhuyinTraditionalSimplifiedToggleRuntimeBehaviorTest {
     }
 
     private Object action(Object metadata, String actionName) throws Exception {
-        Class<?> actionTypeClass = targetClass("oth");
+        Class<?> actionTypeClass = targetClass("qae");
         return metadata.getClass()
-                .getMethod("a", actionTypeClass)
-                .invoke(metadata, enumValue("oth", actionName));
+                .getMethod("g", actionTypeClass)
+                .invoke(metadata, enumValue("qae", actionName));
     }
 
     private String firstLabel(Object action) throws Exception {
-        String[] labels = (String[]) field(action, "n").get(action);
-        return labels[0];
+        java.util.List<?> labels = (java.util.List<?>) field(action, "p").get(action);
+        return (String) labels.get(0);
     }
 
     private Field field(Object receiver, String name) throws Exception {

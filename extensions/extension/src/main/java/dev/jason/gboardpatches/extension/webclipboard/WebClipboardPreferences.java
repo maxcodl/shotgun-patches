@@ -17,6 +17,7 @@ public final class WebClipboardPreferences {
     public static final String PREF_KEY_LOOPBACK_INGRESS_TOKEN =
             "pref_web_clipboard_loopback_ingress_token";
 
+
     public static final boolean DEFAULT_ENABLED = false;
     public static final int DEFAULT_PORT = 8080;
     public static final boolean DEFAULT_RUNTIME_ACTIVE = false;

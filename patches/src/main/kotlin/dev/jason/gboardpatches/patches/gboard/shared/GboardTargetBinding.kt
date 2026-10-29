@@ -14,9 +14,9 @@ internal class GboardMethodTarget(
     returnType: String,
 ) {
     private val owner = classType
-    private val parameters = parameterTypes
-    private val returns = returnType
-    val descriptor: String = "(${parameters.joinToString("")})$returns"
+    val parameterTypes: List<String> = parameterTypes.toList()
+    val returnType: String = returnType
+    val descriptor: String = "(${this.parameterTypes.joinToString("")})${this.returnType}"
     val reference: String = "$owner->$name$descriptor"
     val ownerDescriptor: String get() = owner
 
@@ -26,13 +26,22 @@ internal class GboardMethodTarget(
     fun resolve(ownerClass: MutableClass): MutableMethod = ownerClass.methods.firstOrNull(::matches)
         ?: error("Could not find $reference")
 
+    fun resolveOrNull(context: BytecodePatchContext): MutableMethod? = runCatching {
+        val ownerClass = context.mutableClassDefByOrNull(owner) ?: return null
+        resolveOrNull(ownerClass)
+    }.getOrNull()
+
+    fun resolveOrNull(ownerClass: MutableClass): MutableMethod? = runCatching {
+        ownerClass.methods.firstOrNull(::matches)
+    }.getOrNull()
+
     fun ownerClass(context: BytecodePatchContext): MutableClass = context.mutableClass(owner)
 
     fun matches(method: MethodReference): Boolean =
         method.definingClass == owner &&
             method.name == name &&
-            method.parameterTypes == parameters &&
-            method.returnType == returns
+            method.parameterTypes == parameterTypes &&
+            method.returnType == returnType
 
     fun referenceNamed(replacementName: String): String = "$owner->$replacementName$descriptor"
 
@@ -46,8 +55,8 @@ internal class GboardMethodTarget(
         context.addHelperMethodIfMissing(
             classType = owner,
             name = name,
-            parameterTypes = parameters,
-            returnType = returns,
+            parameterTypes = parameterTypes,
+            returnType = returnType,
             accessFlags = accessFlags,
             registerCount = registerCount,
             body = body,
@@ -63,10 +72,23 @@ internal class GboardFieldTarget(
 ) {
     private val owner = classType
     val reference: String = "$owner->$name:$type"
+    val ownerDescriptor: String get() = owner
 
     fun resolve(context: BytecodePatchContext): MutableField =
-        context.mutableClass(owner).fields.firstOrNull(::matches)
+        resolve(context.mutableClass(owner))
+
+    fun resolve(ownerClass: MutableClass): MutableField =
+        ownerClass.fields.firstOrNull(::matches)
             ?: error("Could not find $reference")
+
+    fun resolveOrNull(context: BytecodePatchContext): MutableField? = runCatching {
+        val ownerClass = context.mutableClassDefByOrNull(owner) ?: return null
+        resolveOrNull(ownerClass)
+    }.getOrNull()
+
+    fun resolveOrNull(ownerClass: MutableClass): MutableField? = runCatching {
+        ownerClass.fields.firstOrNull(::matches)
+    }.getOrNull()
 
     fun matches(field: FieldReference): Boolean =
         field.definingClass == owner && field.name == name && field.type == type

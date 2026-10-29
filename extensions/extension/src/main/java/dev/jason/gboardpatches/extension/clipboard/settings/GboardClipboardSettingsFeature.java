@@ -11,6 +11,7 @@ import java.util.List;
 import dev.jason.gboardpatches.extension.R;
 import dev.jason.gboardpatches.extension.clipboardcontentlimit.GboardClipboardContentLimitSettingsRow;
 import dev.jason.gboardpatches.extension.settings.GboardPatchesFeatureAvailability;
+import dev.jason.gboardpatches.extension.settings.GboardPatchesIcons;
 import dev.jason.gboardpatches.extension.settings.GboardPatchesSettingsContract;
 import dev.jason.gboardpatches.extension.settings.GboardSettingsText;
 
@@ -65,8 +66,23 @@ public final class GboardClipboardSettingsFeature
         return entrySummary;
     }
 
+    @Override
+    public int getEntryIcon() {
+        return GboardPatchesIcons.CLIPBOARD;
+    }
+
+    @Override
+    public String getEntryTone() {
+        return "amber";
+    }
+
     public GboardPatchesSettingsContract.Feature getWebClipboardFeature() {
         return webClipboardFeature;
+    }
+
+    @Override
+    public List<GboardPatchesSettingsContract.Feature> getNavigationChildren() {
+        return Collections.singletonList(webClipboardFeature);
     }
 
     @Override

@@ -26,6 +26,8 @@ public final class GboardAiWritingToolsRuntime {
             "llm_pc_supported_language_tags";
     static final String FLAG_WRITING_HELPER_MODEL_VERSION =
             "writing_helper_model_version";
+    static final String FLAG_WRITING_HELPER_VOICE_MODEL_VERSION =
+            "writing_helper_voice_input_model_version";
     static final String FLAG_WRITING_HELPER_TEXT_STYLIZATION_MODEL_VERSION =
             "writing_helper_text_stylization_model_version";
     static final String FLAG_ENABLE_WRITING_TOOLS_FOR_MINORS =
@@ -35,14 +37,17 @@ public final class GboardAiWritingToolsRuntime {
     static final String FLAG_ON_DEVICE_PROOFREAD = "enable_on_device_proofread";
     static final String FLAG_ENABLE_WRITING_TOOLS_VOICE_COMMANDS =
             "enable_writing_tools_voice_commands";
+    static final String FLAG_ENABLE_MODELESS_SMART_EDIT =
+            "enable_nga_lab_modeless_smartedit";
+    static final String FLAG_MODELESS_SMART_EDIT_REGEX_VERSION =
+            "nga_lab_modeless_smartedit_regex_version";
     static final String ALL_LANGUAGES_ALLOWLIST_VALUE = "*";
-    static final String PROOFREAD_MODEL_VERSION_OVERRIDE =
-            "202408051448_prod_sd_config";
-    static final String STYLIZATION_MODEL_VERSION_OVERRIDE =
+    static final String MODELESS_SMART_EDIT_REGEX_VERSION = "v3";
+    static final String SERVER_WRITING_CONFIGURATION =
             "202504090000_writing_tools_config";
 
     private static final String TAG = "GboardPatches";
-    private static final String LOG_PREFIX = "[gboard-writing-tools-17.7.7] ";
+    private static final String LOG_PREFIX = "[gboard-writing-tools-18.0.3] ";
     private static final String[] FORCED_SIGNAL_TARGET_SPECS = new String[]{
             "gvu#a",
             "lvi#b",
@@ -78,7 +83,7 @@ public final class GboardAiWritingToolsRuntime {
                     flagName,
                     originalResult,
                     settings,
-                    GboardAiWritingToolsOfficialPreferences.snapshot());
+                    null);
             if (enforced != originalResult) {
                 logLimited(FLAG_LOG_COUNT,
                         "flag=" + flagName
@@ -104,29 +109,29 @@ public final class GboardAiWritingToolsRuntime {
         }
 
         BackendDecision backend = backendDecision(settings.backendType);
+        if (originalResult instanceof String
+                && Long.valueOf(1L).equals(backend.backendType)
+                && isServerModelConfiguration(flagName)) {
+            return SERVER_WRITING_CONFIGURATION;
+        }
         if (FLAG_BACKEND_TYPE.equals(flagName)) {
-            return originalResult instanceof Long ? backend.backendType : originalResult;
+            return originalResult instanceof Long && backend.backendType != null ? backend.backendType : originalResult;
         }
         if (FLAG_HYBRID.equals(flagName)) {
-            return originalResult instanceof Boolean ? backend.hybridEnabled : originalResult;
+            return originalResult instanceof Boolean && backend.hybridEnabled != null ? backend.hybridEnabled : originalResult;
         }
         if (FLAG_ON_DEVICE_PROOFREAD.equals(flagName)) {
-            return originalResult instanceof Boolean
+            return originalResult instanceof Boolean && backend.onDeviceProofreadEnabled != null
                     ? backend.onDeviceProofreadEnabled
                     : originalResult;
         }
         if (FLAG_ENABLE_WRITING_TOOLS_VOICE_COMMANDS.equals(flagName)) {
             return originalResult instanceof Boolean ? Boolean.TRUE : originalResult;
         }
-
-        if (GboardAiWritingToolsSettings.BACKEND_GBOARD_SERVER.equals(settings.backendType)
-                && originalResult instanceof String) {
-            if (FLAG_WRITING_HELPER_MODEL_VERSION.equals(flagName)) {
-                return PROOFREAD_MODEL_VERSION_OVERRIDE;
-            }
-            if (FLAG_WRITING_HELPER_TEXT_STYLIZATION_MODEL_VERSION.equals(flagName)) {
-                return STYLIZATION_MODEL_VERSION_OVERRIDE;
-            }
+        if (FLAG_MODELESS_SMART_EDIT_REGEX_VERSION.equals(flagName)) {
+            return originalResult instanceof String && ((String) originalResult).isEmpty()
+                    ? MODELESS_SMART_EDIT_REGEX_VERSION
+                    : originalResult;
         }
 
         if (FLAG_WRITING_HELPER_SUPPORTED_LANGUAGE_TAGS.equals(flagName)
@@ -139,24 +144,23 @@ public final class GboardAiWritingToolsRuntime {
             return originalResult;
         }
 
-        GboardAiWritingToolsOfficialPreferences.Snapshot official =
-                officialPreferences == null
-                        ? new GboardAiWritingToolsOfficialPreferences.Snapshot(null, null)
-                        : officialPreferences;
-        if (FLAG_CONFIG_PROOFREAD.equals(flagName)) {
-            return Boolean.valueOf(official.shouldEnableProofread());
-        }
-        if (FLAG_WRITING_TOOLS.equals(flagName)
+        if (FLAG_CONFIG_PROOFREAD.equals(flagName)
+                || FLAG_WRITING_TOOLS.equals(flagName)
                 || FLAG_ENABLE_WRITING_TOOLS_COOPERATIVE_MODE.equals(flagName)
                 || FLAG_WRITING_HELPER_ON_SELECTED_TEXT.equals(flagName)
-                || FLAG_WRITING_HELPER_ENABLE_TEXT_STYLIZATION_INTERNAL.equals(flagName)) {
-            return Boolean.valueOf(official.shouldEnableWritingTools());
-        }
-        if (FLAG_WRITING_HELPER.equals(flagName)
-                || FLAG_ENABLE_WRITING_TOOLS_FOR_MINORS.equals(flagName)) {
-            return Boolean.valueOf(official.shouldEnableAnyFeature());
+                || FLAG_WRITING_HELPER_ENABLE_TEXT_STYLIZATION_INTERNAL.equals(flagName)
+                || FLAG_WRITING_HELPER.equals(flagName)
+                || FLAG_ENABLE_WRITING_TOOLS_FOR_MINORS.equals(flagName)
+                || FLAG_ENABLE_MODELESS_SMART_EDIT.equals(flagName)) {
+            return Boolean.TRUE;
         }
         return originalResult;
+    }
+
+    private static boolean isServerModelConfiguration(String flagName) {
+        return FLAG_WRITING_HELPER_MODEL_VERSION.equals(flagName)
+                || FLAG_WRITING_HELPER_VOICE_MODEL_VERSION.equals(flagName)
+                || FLAG_WRITING_HELPER_TEXT_STYLIZATION_MODEL_VERSION.equals(flagName);
     }
 
     static BackendDecision backendDecision(String backendType) {
@@ -166,7 +170,10 @@ public final class GboardAiWritingToolsRuntime {
         if (GboardAiWritingToolsSettings.BACKEND_PRIVATE_INFERENCE_ASTREA.equals(backendType)) {
             return new BackendDecision(Long.valueOf(3L), Boolean.TRUE, Boolean.FALSE);
         }
-        return new BackendDecision(Long.valueOf(1L), Boolean.FALSE, Boolean.FALSE);
+        if (GboardAiWritingToolsSettings.BACKEND_GBOARD_SERVER.equals(backendType)) {
+            return new BackendDecision(Long.valueOf(1L), Boolean.FALSE, Boolean.FALSE);
+        }
+        return new BackendDecision(null, null, null);
     }
 
     public static boolean applySignalResult(Object signal, boolean originalResult) {

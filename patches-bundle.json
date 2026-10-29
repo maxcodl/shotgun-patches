@@ -1,7 +1,7 @@
 {
-  "created_at": "2026-10-29T10:34:00Z",
-  "description": "### 🐛 Bug Fixes & Release Automation (v4.0.0-dev.10)\n\n* **Incognito Mode Toggle:** tolerate Gboard 18.5.4 obfuscation changes when locating the clipboard policy boolean helper.\n* **Release automation:** build and validate the patch bundle automatically on every `dev` push while keeping GitHub releases tag-only.\n\n### 🐛 修復與發布自動化 (v4.0.0-dev.10)\n\n* **無痕模式切換:** 容許 Gboard 18.5.4 混淆類別名稱變更，正確定位剪貼簿政策布林輔助方法。\n* **發布自動化:** 每次推送至 `dev` 自動建置並驗證補丁套件，同時維持僅由標籤發布 GitHub Release。",
-  "download_url": "https://github.com/maxcodl/shotgun-patches/releases/download/v4.0.0-dev.10/patches-4.0.0-dev.10.mpp",
+  "created_at": "2026-10-29T10:42:00Z",
+  "description": "### 🔄 Source Refresh & Compatibility Update (v4.0.0-dev.11)\n\n* **Incognito Mode Toggle:** publish the Gboard 18.5.4 compatibility fix in a new bundle so Morphe can refresh to the corrected patch source.\n* **Patch metadata:** synchronize the public version, patch inventory, and release download URL for this fork.\n\n### 🔄 更新來源與相容性修復 (v4.0.0-dev.11)\n\n* **無痕模式切換:** 以新套件發布 Gboard 18.5.4 相容性修復，讓 Morphe 能重新整理至修正後的補丁來源。\n* **補丁中繼資料:** 同步此分支的公開版本、補丁清單與發布下載網址。",
+  "download_url": "https://github.com/maxcodl/shotgun-patches/releases/download/v4.0.0-dev.11/patches-4.0.0-dev.11.mpp",
   "signature_download_url": "",
-  "version": "4.0.0-dev.10"
+  "version": "4.0.0-dev.11"
 }

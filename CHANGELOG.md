@@ -1,3 +1,15 @@
+## [4.0.0-dev.11](https://github.com/maxcodl/shotgun-patches/compare/v4.0.0-dev.10...v4.0.0-dev.11) (2026-10-29)
+
+### 🔄 Source Refresh & Compatibility Update
+
+* **Incognito Mode Toggle:** publish the Gboard 18.5.4 compatibility fix in a new bundle so Morphe can refresh to the corrected patch source.
+* **Patch metadata:** synchronize the public version, patch inventory, and release download URL for this fork.
+
+### 🔄 更新來源與相容性修復
+
+* **無痕模式切換:** 以新套件發布 Gboard 18.5.4 相容性修復，讓 Morphe 能重新整理至修正後的補丁來源。
+* **補丁中繼資料:** 同步此分支的公開版本、補丁清單與發布下載網址。
+
 ## [4.0.0-dev.10](https://github.com/maxcodl/shotgun-patches/compare/v4.0.0-dev.9...v4.0.0-dev.10) (2026-10-29)
 
 ### 🐛 Bug Fixes & Release Automation

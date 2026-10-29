@@ -7,9 +7,9 @@ import dev.jason.gboardpatches.patches.gboard.shared.generated.GboardTargetAdmis
 internal object Constants {
     const val GBOARD_PACKAGE_NAME = "com.google.android.inputmethod.latin"
     const val GBOARD_PATCHED_PACKAGE_NAME = "dev.jason.com.google.android.inputmethod.latin"
-    const val GBOARD_PATCH_AUTHOR = "Burhanverse"
-    const val GBOARD_PATCH_AUTHOR_URL = "https://github.com/Burhanverse"
-    const val GBOARD_PATCH_REPOSITORY_URL = "https://github.com/Burhanverse/shotgun-patches"
+    const val GBOARD_PATCH_AUTHOR = "maxcodl"
+    const val GBOARD_PATCH_AUTHOR_URL = "https://github.com/maxcodl"
+    const val GBOARD_PATCH_REPOSITORY_URL = "https://github.com/maxcodl/shotgun-patches"
     val GBOARD_PATCH_VERSION = PatchBuildInfo.VERSION
 
     val COMPATIBILITY_GBOARD = Compatibility(

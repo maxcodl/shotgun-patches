@@ -195,10 +195,10 @@ patches {
     about {
         name = "Shotgun Patches"
         description = "Morphe patches for Gboard."
-        source = "https://github.com/Burhanverse/shotgun-patches"
-        author = "Jason Wu"
-        contact = "https://github.com/Burhanverse/shotgun-patches/issues"
-        website = "https://github.com/Burhanverse/shotgun-patches"
+        source = "https://github.com/maxcodl/shotgun-patches"
+        author = "maxcodl"
+        contact = "https://github.com/maxcodl/shotgun-patches/issues"
+        website = "https://github.com/maxcodl/shotgun-patches"
         license = "GPLv3"
     }
 }

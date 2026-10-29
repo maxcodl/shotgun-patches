@@ -1,3 +1,15 @@
+## [4.0.0-dev.12](https://github.com/maxcodl/shotgun-patches/compare/v4.0.0-dev.11...v4.0.0-dev.12) (2026-10-29)
+
+### 🔄 Fork Manifest & Source Identity
+
+* **Manifest:** replace inherited Burhanverse source, author, contact, and website metadata with this fork's public identity.
+* **Extension About page:** align author and repository links with `maxcodl/shotgun-patches`.
+
+### 🔄 分支 Manifest 與來源資訊
+
+* **Manifest:** 將繼承的 Burhanverse 來源、作者、聯絡方式與網站資訊替換為此分支的公開身份。
+* **Extension About 頁面:** 將作者與儲存庫連結同步至 `maxcodl/shotgun-patches`。
+
 ## [4.0.0-dev.11](https://github.com/maxcodl/shotgun-patches/compare/v4.0.0-dev.10...v4.0.0-dev.11) (2026-10-29)
 
 ### 🔄 Source Refresh & Compatibility Update

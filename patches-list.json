@@ -316,6 +316,18 @@
       "options": []
     },
     {
+      "name": "Hyperspeed Typing Animation",
+      "description": "持續快速輸入時顯示動畫，並支援所有鍵盤\nShow the animation during sustained fast typing with support for all keyboards.",
+      "use": true,
+      "dependencies": [],
+      "compatiblePackages": {
+        "com.google.android.inputmethod.latin": [
+          "18.5.4.993608717-release-arm64-v8a"
+        ]
+      },
+      "options": []
+    },
+    {
       "name": "Incognito Mode Toggle",
       "description": "在 Access Point 工具列新增無痕模式切換按鈕，並可設定無痕模式下是否啟用剪貼簿與語音輸入\nAdd an Incognito toggle to the Access Point toolbar and configure clipboard and voice typing availability while Incognito mode is active.",
       "use": true,

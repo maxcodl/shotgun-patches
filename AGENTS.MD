@@ -7,7 +7,7 @@
 ## Version bump
 - Update `gradle.properties`: `version = <new>`
 - Update `patches-list.json`: `"version": "<new>"`
-- Update `patches-bundle.json`: `"version"`, `"created_at"`, `"download_url"`
+- Update `patches-bundle.json`: `"version"`, `"created_at"` (format `YYYY-MM-DDTHH:MM:SS`, no `Z` — Morphe parses it as LocalDateTime), `"download_url"`
 
 ## Build
 - `./gradlew clean :patches:buildAndroid generatePatchesList`
